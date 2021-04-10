@@ -13,9 +13,7 @@ def cargarImg(event):
     global filename
     file = askopenfilename()
     filestatus["text"] = str(file)
-    ruta = str(file)
-    print("esta es la ruta", ruta)
-    print("este es el archivo", os.path.split(ruta))
+    ruta = str(file)    
     filename = os.path.split(ruta)
 
 def histogramColor(event):
