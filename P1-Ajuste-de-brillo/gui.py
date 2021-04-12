@@ -28,6 +28,12 @@ def histogramGris(event):
     else:
         histograma.histogramaGris(filename[1])
 
+def ecualizarImg(event):
+    if(ruta == None):
+        messagebox.showerror("Error", "Selecciona una imagen primero")
+    else:
+        histograma.ecualizacion(filename[1])
+
 #Creamos la ventana
 window = tk.Tk()
 window.title("Ajuste de brillo")
@@ -50,6 +56,10 @@ cargarImgBt.place(x=145, y = 200)
 #Creamos un label para saber el status del archivo
 filestatus = tk.Label(text="No se ha seleccionado archivo...", foreground="white", background="black", width=50, height=1, font=("Courier", 10), anchor="center")
 filestatus.place(x=145, y=250)
+#Creamos un botón para ecualizar la imagen
+cargarImgBt = tk.Button(text="ECUALIZAR IMAGEN", width=30, height=1, font=("Courier", 16), anchor="center", foreground="blue", background="black")
+cargarImgBt.bind("<Button-1>", ecualizarImg)
+cargarImgBt.place(x=145, y = 350)
 
 frame.pack()
 file = None

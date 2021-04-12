@@ -30,3 +30,16 @@ class Histograma:
         plt.show()
 
         cv2.destroyAllWindows()
+    
+    def ecualizacion(self, ruta):
+        img = cv2.imread(ruta, cv2.IMREAD_GRAYSCALE)
+        img = cv2.equalizeHist(img)
+
+        cv2.imshow('Histogramas', img)
+        hist = cv2.calcHist([img], [0], None, [256], [0, 256])
+        plt.plot(hist, color='gray' )
+
+        plt.xlabel('intensidad de iluminacion')
+        plt.ylabel('cantidad de pixeles')
+        plt.show()
+        cv2.waitKey()
