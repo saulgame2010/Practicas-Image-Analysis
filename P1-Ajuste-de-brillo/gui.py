@@ -2,6 +2,7 @@ import tkinter as tk
 from pathlib import Path
 from tkinter.filedialog import askopenfilename
 from tkinter import messagebox
+from tkinter import simpledialog
 import sys
 import os
 from histogram import Histograma
@@ -34,6 +35,14 @@ def ecualizarImg(event):
     else:
         histograma.ecualizacion(filename[1])
 
+def expandirHist(event):
+    if(ruta == None):
+        messagebox.showerror("Error", "Selecciona una imagen primero")
+    else:
+        intervaloMin = simpledialog.askinteger(title="Nuevo intervalo mínimo", prompt="Cuál será el nuevo intervalo mínimo para el histograma?:")
+        intervaloMax = simpledialog.askinteger(title="Nuevo intervalo máximo", prompt="Cuál será el nuevo intervalo máximo para el histograma?:")
+        histograma.expansion(filename[1], intervaloMin, intervaloMax)
+
 #Creamos la ventana
 window = tk.Tk()
 window.title("Ajuste de brillo")
@@ -57,9 +66,13 @@ cargarImgBt.place(x=145, y = 200)
 filestatus = tk.Label(text="No se ha seleccionado archivo...", foreground="white", background="black", width=50, height=1, font=("Courier", 10), anchor="center")
 filestatus.place(x=145, y=250)
 #Creamos un botón para ecualizar la imagen
-cargarImgBt = tk.Button(text="ECUALIZAR IMAGEN", width=30, height=1, font=("Courier", 16), anchor="center", foreground="blue", background="black")
+cargarImgBt = tk.Button(text="ECUALIZAR IMAGEN", width=30, height=1, font=("Courier", 16), anchor="center", foreground="red", background="black")
 cargarImgBt.bind("<Button-1>", ecualizarImg)
-cargarImgBt.place(x=145, y = 350)
+cargarImgBt.place(x=145, y = 300)
+#Boton para expander histograma
+expanderBtn = tk.Button(text="EXPANDIR HISTOGRAMA", width=30, height=1, font=("Courier", 16), anchor="center", foreground="yellow", background="black")
+expanderBtn.bind("<Button-1>", expandirHist)
+expanderBtn.place(x=145, y = 370)
 
 frame.pack()
 file = None
