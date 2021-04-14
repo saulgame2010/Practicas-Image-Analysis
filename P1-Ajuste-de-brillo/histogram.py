@@ -70,3 +70,27 @@ class Histograma:
         plt.ylabel('cantidad de pixeles')
         plt.show()
         cv2.destroyAllWindows()
+    
+    def contraccion(self, ruta, nuevoMin, nuevoMax):
+        img = cv2.imread(ruta, cv2.IMREAD_GRAYSCALE)
+        tamanioImg = img.shape
+        pixeles = []
+        for x in range(tamanioImg[0]):
+            for y in range(tamanioImg[1]):                
+                pixeles.append(img.item(x, y))
+        npPixeles = np.array(pixeles)
+        infoImg = np.unique(npPixeles)
+        max = np.amax(infoImg)
+        min = np.amin(infoImg)
+        contraccion = Mates()
+        for x in range(tamanioImg[0]):
+            for y in range(tamanioImg[1]):
+                img.itemset((x, y), contraccion.contraer(nuevoMax, nuevoMin, max, min, img.item(x, y)))
+        cv2.imshow("Histograma", img)
+        hist = cv2.calcHist([img], [0], None, [256], [0, 256])
+        plt.plot(hist, color='gray' )
+
+        plt.xlabel('intensidad de iluminacion')
+        plt.ylabel('cantidad de pixeles')
+        plt.show()
+        cv2.destroyAllWindows()
