@@ -1,8 +1,3 @@
-import cv2
-import numpy as np
-from matplotlib import pyplot as plt
-from PIL import Image
-
 class Mates:
     def ecRecta(self, x1, x2, y1, y2, intensidadPixel):
         #Recordemos que una recta es y = mx + b
@@ -13,3 +8,6 @@ class Mates:
     
     def contraer(self, cmax, cmin, rmax, rmin, rk):
         return ((cmax - cmin)/ (rmax - rmin)) * (rk - rmin) + cmin
+    
+    def desplazar(self, desplazamiento, pixel):
+        return pixel + desplazamiento
