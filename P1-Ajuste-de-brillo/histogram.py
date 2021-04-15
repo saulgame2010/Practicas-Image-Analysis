@@ -110,3 +110,31 @@ class Histograma:
         plt.ylabel('cantidad de pixeles')
         plt.show()
         cv2.destroyAllWindows()
+
+    def ecExp(self, ruta, alfa):
+        img = cv2.imread(ruta, cv2.IMREAD_GRAYSCALE)
+        tamanioImg = img.shape
+        totalElementos = img.size
+        pixeles = []
+        for x in range(tamanioImg[0]):
+            for y in range(tamanioImg[1]):
+                pixeles.append(img.item(x, y))
+        npPixeles = np.array(pixeles)
+        infoImg = np.unique(npPixeles, return_counts=True)        
+        frecuencias = np.array(infoImg[1])        
+        probabilidad = []        
+        min = np.amin(infoImg[0])        
+        for i in range(0, len(infoImg[0])):
+            probabilidad.append(frecuencias[i]/totalElementos)        
+        ecu = Mates()
+        """for x in range(tamanioImg[0]):
+            for y in range(tamanioImg[1]):
+                img.itemset((x, y), ecu.ecualizacionExp(min, alfa, sumatoria, img.item(x, y)))
+        cv2.imshow("Histograma", img)
+        hist = cv2.calcHist([img], [0], None, [256], [0, 256])
+        plt.plot(hist, color='gray' )
+
+        plt.xlabel('intensidad de iluminacion')
+        plt.ylabel('cantidad de pixeles')
+        plt.show()
+        cv2.destroyAllWindows()"""

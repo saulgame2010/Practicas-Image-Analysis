@@ -1,3 +1,5 @@
+from math import log
+
 class Mates:
     def ecRecta(self, x1, x2, y1, y2, intensidadPixel):
         #Recordemos que una recta es y = mx + b
@@ -11,3 +13,6 @@ class Mates:
     
     def desplazar(self, desplazamiento, pixel):
         return pixel + desplazamiento
+
+    def ecualizacionExp(self, rmin, alfa, probabilidades, rj):
+        return rmin - ((1/alfa) * log(1 - probabilidades))

@@ -58,6 +58,13 @@ def desplazarHist(event):
         des = simpledialog.askinteger(title="Desplazar histograma", prompt="Cuál será el desplazamiento del histograma?:")
         histograma.desplazamiento(filename[1], des)
     
+def exponencial(event):
+    if(ruta == None):
+        messagebox.showerror("Error", "Selecciona una imagen primero")
+    else:
+        alfa = simpledialog.askinteger(title="Define el alfa", prompt="Cuál será el valor alfa?:")
+        histograma.ecExp(filename[1], alfa)
+    
 
 #Creamos la ventana
 window = tk.Tk()
@@ -99,8 +106,8 @@ contraerBtn.bind("<Button-1>", desplazarHist)
 contraerBtn.place(x=450, y = 150)
 #Boton para ecualización exponencial
 contraerBtn = tk.Button(text="ECUALIZACIÓN EXPONENCIAL", width=30, height=1, font=("Courier", 16), anchor="center", foreground="magenta", background="black")
-contraerBtn.bind("<Button-1>", desplazarHist)
-contraerBtn.place(x=450, y = 250)
+contraerBtn.bind("<Button-1>", exponencial)
+contraerBtn.place(x=450, y = 200)
 
 frame.pack()
 file = None
