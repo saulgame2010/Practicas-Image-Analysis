@@ -138,21 +138,14 @@ class Histograma:
                 pG.append(probabilidad[i])
             else: 
                 pG.append(probabilidad[i] + pG[i-1])
-        print(pG)
-        """for x in range(tamanioImg[0]):
-            for y in range(tamanioImg[1]):
-                for pg in probabilidad:
-                    pG = pg + pG                    
-                    if pG >= 1:
-                        break
-                    else:
-                        img.itemset((x, y), ecu.ecualizacionExp(min, alfa, pG, img.item(x, y)))"""         
-        """for pg in probabilidad:
-            pG = pg + pG
-           # print(pG)
-            for x in range(tamanioImg[0]):
-                for y in range(tamanioImg[1]):
-                    img.itemset((x, y), ecu.ecualizacionExp(min, alfa, pG, img.item(x, y)))
+        print(len(pG))
+        sk = []
+        cont = 0
+        for i in range(0, len(probabilidad)-1):
+            sk.append(ecu.ecualizacionExp(min, alfa, pG[i], npPixeles[i]))
+        print(sk)
+        print(len(sk))
+        """
         cv2.imshow("Histograma", img)
         hist = cv2.calcHist([img], [0], None, [256], [0, 256])
         plt.plot(hist, color='gray' )

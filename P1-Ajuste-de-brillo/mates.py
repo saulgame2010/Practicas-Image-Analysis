@@ -15,4 +15,4 @@ class Mates:
         return pixel + desplazamiento
 
     def ecualizacionExp(self, rmin, alfa, probabilidades, rj):
-        return rmin - ((1/alfa) * log(1 - probabilidades))
+        return round(rmin - ((1/alfa) * log(1 - probabilidades)))
