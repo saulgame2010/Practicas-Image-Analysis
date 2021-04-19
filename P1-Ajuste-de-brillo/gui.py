@@ -63,7 +63,7 @@ def exponencial(event):
     if(ruta == None):
         messagebox.showerror("Error", "Selecciona una imagen primero")
     else:
-        alfa = simpledialog.askinteger(title="Define el alfa", prompt="Cuál será el valor alfa?:")
+        alfa = simpledialog.askfloat(title="Define el alfa", prompt="Cuál será el valor alfa?:")
         histograma.ecExp(filename[1], alfa)
     
 

@@ -120,36 +120,44 @@ class Histograma:
             for y in range(tamanioImg[1]):
                 pixeles.append(img.item(x, y))
         npPixeles = np.array(pixeles)
-        infoImg = np.unique(npPixeles, return_counts=True) #Tupla (arreglo, num apariciones)   
-        print(infoImg[0])    
-        print(infoImg[1])
+        infoImg = np.unique(npPixeles, return_counts=True) #Tupla (arreglo, num apariciones)           
         frecuencias = np.array(infoImg[1])        
         probabilidad = []        
         min = np.amin(infoImg[0])         
         for i in range(0, len(infoImg[0])):
             probabilidad.append(frecuencias[i]/totalElementos)        
-        ecu = Mates()
-        print(probabilidad)
-        pG = []
-        print("Hay ",len(probabilidad), " elementos en el arreglo probabilidad")
-        print("El total de pixeles es: ",totalElementos)
+        ecu = Mates()        
+        pG = []        
         for i in range(0, len(probabilidad) - 1):
             if(i == 0):
                 pG.append(probabilidad[i])
             else: 
-                pG.append(probabilidad[i] + pG[i-1])
-        print(len(pG))
+                pG.append(probabilidad[i] + pG[i-1])        
         sk = []
         cont = 0
         for i in range(0, len(probabilidad)-1):
             sk.append(ecu.ecualizacionExp(min, alfa, pG[i], npPixeles[i]))
-        print(sk)
-        print(len(sk))
-        """
+        print(pixeles)
+        c = 0
+        for index, value in enumerate(pixeles):
+            if value == pixeles[index]:
+                if c < 93:
+                    pixeles[index] = sk[c]
+                else:
+                    break
+                c = c + 1
+        caca = []
+        for x in range(tamanioImg[0]):
+            for y in range(tamanioImg[1]):
+                img.itemset((x, y), pixeles[cont])
+                caca.append(pixeles[cont])
+                cont = cont + 1
+        print(len(pixeles))       
+        
         cv2.imshow("Histograma", img)
         hist = cv2.calcHist([img], [0], None, [256], [0, 256])
         plt.plot(hist, color='gray' )
         plt.xlabel('intensidad de iluminacion')
         plt.ylabel('cantidad de pixeles')
         plt.show()
-        cv2.destroyAllWindows()"""
+        cv2.destroyAllWindows()
