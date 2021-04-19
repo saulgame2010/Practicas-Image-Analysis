@@ -13,9 +13,10 @@ def cargarImg(event):
     global ruta
     global filename
     file = askopenfilename()
-    filestatus["text"] = str(file)
+    filestatus["text"] = str(file)#int()"""ddsd"""
     ruta = str(file)    
-    filename = os.path.split(ruta)
+    filename = os.path.split(ruta)#F:/users/imagen.jpg
+    #('F:/users/', 'imagen.jpg')
 
 def histogramColor(event):
     if(ruta == None):

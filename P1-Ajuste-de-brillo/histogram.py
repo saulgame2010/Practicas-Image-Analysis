@@ -48,14 +48,14 @@ class Histograma:
 
     def expansion(self, ruta, nuevoMin, nuevoMax):
         img = cv2.imread(ruta, cv2.IMREAD_GRAYSCALE)
-        tamanioImg = img.shape
+        tamanioImg = img.shape #(ancho, alto)
         print(tamanioImg)
-        pixeles = []
-        for x in range(tamanioImg[0]):
+        pixeles = [] #lista
+        for x in range(tamanioImg[0]): #(min, max)
             for y in range(tamanioImg[1]):                
                 pixeles.append(img.item(x, y))
         npPixeles = np.array(pixeles)
-        infoImg = np.unique(npPixeles)
+        infoImg = np.unique(npPixeles) #arreglo
         max = np.amax(infoImg)
         min = np.amin(infoImg)
         recta = Mates()
@@ -79,7 +79,7 @@ class Histograma:
             for y in range(tamanioImg[1]):                
                 pixeles.append(img.item(x, y))
         npPixeles = np.array(pixeles)
-        infoImg = np.unique(npPixeles)
+        infoImg = np.unique(npPixeles)#arreglo
         max = np.amax(infoImg)
         min = np.amin(infoImg)
         contraccion = Mates()
@@ -120,20 +120,42 @@ class Histograma:
             for y in range(tamanioImg[1]):
                 pixeles.append(img.item(x, y))
         npPixeles = np.array(pixeles)
-        infoImg = np.unique(npPixeles, return_counts=True)        
+        infoImg = np.unique(npPixeles, return_counts=True) #Tupla (arreglo, num apariciones)   
+        print(infoImg[0])    
+        print(infoImg[1])
         frecuencias = np.array(infoImg[1])        
         probabilidad = []        
-        min = np.amin(infoImg[0])        
+        min = np.amin(infoImg[0])         
         for i in range(0, len(infoImg[0])):
             probabilidad.append(frecuencias[i]/totalElementos)        
         ecu = Mates()
+        print(probabilidad)
+        pG = []
+        print("Hay ",len(probabilidad), " elementos en el arreglo probabilidad")
+        print("El total de pixeles es: ",totalElementos)
+        for i in range(0, len(probabilidad) - 1):
+            if(i == 0):
+                pG.append(probabilidad[i])
+            else: 
+                pG.append(probabilidad[i] + pG[i-1])
+        print(pG)
         """for x in range(tamanioImg[0]):
             for y in range(tamanioImg[1]):
-                img.itemset((x, y), ecu.ecualizacionExp(min, alfa, sumatoria, img.item(x, y)))
+                for pg in probabilidad:
+                    pG = pg + pG                    
+                    if pG >= 1:
+                        break
+                    else:
+                        img.itemset((x, y), ecu.ecualizacionExp(min, alfa, pG, img.item(x, y)))"""         
+        """for pg in probabilidad:
+            pG = pg + pG
+           # print(pG)
+            for x in range(tamanioImg[0]):
+                for y in range(tamanioImg[1]):
+                    img.itemset((x, y), ecu.ecualizacionExp(min, alfa, pG, img.item(x, y)))
         cv2.imshow("Histograma", img)
         hist = cv2.calcHist([img], [0], None, [256], [0, 256])
         plt.plot(hist, color='gray' )
-
         plt.xlabel('intensidad de iluminacion')
         plt.ylabel('cantidad de pixeles')
         plt.show()
