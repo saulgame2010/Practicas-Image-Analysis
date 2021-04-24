@@ -120,8 +120,7 @@ class Histograma:
             for y in range(tamanioImg[1]):
                 pixeles.append(img.item(x, y))
         npPixeles = np.array(pixeles)
-        infoImg, indices, frecuencias = np.unique(npPixeles,return_inverse=True, return_counts=True) #Tupla (arreglo, num apariciones)
-        print(infoImg[indices])
+        infoImg, indices, frecuencias = np.unique(npPixeles,return_inverse=True, return_counts=True) #Tupla (arreglo, num apariciones)        
         probabilidad = []        
         min = np.amin(infoImg)         
         for i in range(0, len(infoImg)):
@@ -137,16 +136,11 @@ class Histograma:
         for i in range(0, len(probabilidad)-1):
             infoImg[i] = ecu.ecualizacionExp(min, alfa, pG[i], npPixeles[i])        
         
-        cont = 0
-        caca = []
+        cont = 0        
         for x in range(tamanioImg[0]):
             for y in range(tamanioImg[1]):
-                img.itemset((x, y), infoImg[indices[cont]])
-                caca.append(infoImg[indices[cont]])
+                img.itemset((x, y), infoImg[indices[cont]])                
                 cont = cont + 1
-        print(caca)       
-        print(infoImg)
-        
         cv2.imshow("Histograma", img)
         hist = cv2.calcHist([img], [0], None, [256], [0, 256])
         plt.plot(hist, color='gray' )
