@@ -44,7 +44,9 @@ class Histograma:
         plt.xlabel('intensidad de iluminacion')
         plt.ylabel('cantidad de pixeles')
         plt.show()
-        cv2.waitKey()
+        cv2.imwrite("./imgRes/ecualizada_"+ruta, img)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
 
     def expansion(self, ruta, nuevoMin, nuevoMax):
         img = cv2.imread(ruta, cv2.IMREAD_GRAYSCALE)
@@ -69,6 +71,8 @@ class Histograma:
         plt.xlabel('intensidad de iluminacion')
         plt.ylabel('cantidad de pixeles')
         plt.show()
+        cv2.imwrite("./imgRes/expansion_"+ruta, img)
+        cv2.waitKey(0)
         cv2.destroyAllWindows()
     
     def contraccion(self, ruta, nuevoMin, nuevoMax):
@@ -93,6 +97,8 @@ class Histograma:
         plt.xlabel('intensidad de iluminacion')
         plt.ylabel('cantidad de pixeles')
         plt.show()
+        cv2.imwrite("./imgRes/contraccion_"+ruta, img)
+        cv2.waitKey(0)
         cv2.destroyAllWindows()
 
     def desplazamiento(self, ruta, des):
@@ -109,6 +115,8 @@ class Histograma:
         plt.xlabel('intensidad de iluminacion')
         plt.ylabel('cantidad de pixeles')
         plt.show()
+        cv2.imwrite("./imgRes/desplazamiento_"+ruta, img)
+        cv2.waitKey(0)
         cv2.destroyAllWindows()
 
     def ecExp(self, ruta, alfa):
@@ -147,4 +155,6 @@ class Histograma:
         plt.xlabel('intensidad de iluminacion')
         plt.ylabel('cantidad de pixeles')
         plt.show()
+        cv2.imwrite("./imgRes/ecExp_"+ruta, img)
+        cv2.waitKey(0)
         cv2.destroyAllWindows()
