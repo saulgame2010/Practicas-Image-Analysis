@@ -21,7 +21,34 @@ def promediador(event):
     if(ruta == None):
         messagebox.showerror("Error", "Selecciona una imagen primero")
     else:
-        filtro.filtroPromediador(filename[1])
+        n = simpledialog.askinteger(title="Tamaño de la matriz", prompt="¿De qué tamaño será la matriz?")
+        filtro.filtroPromediador(filename[1], n)
+
+def media(event):
+    if(ruta == None):
+        messagebox.showerror("Error", "Selecciona una imagen primero")
+    else:
+        n = simpledialog.askinteger(title="Tamaño de la matriz", prompt="¿De qué tamaño será la matriz?")
+        filtro.filtroMedia(filename[1], n)
+
+def maximo(event):
+    if(ruta == None):
+        messagebox.showerror("Error", "Selecciona una imagen primero")
+    else:
+        filtro.Maximo(filename[1])
+
+def minimo(event):
+    if(ruta == None):
+        messagebox.showerror("Error", "Selecciona una imagen primero")
+    else:
+        filtro.Minimo(filename[1])
+
+def kir(event):
+    if(ruta == None):
+        messagebox.showerror("Error", "Selecciona una imagen primero")
+    else:
+        k = simpledialog.askinteger(title="K", prompt="Cual kernel quieres utilizar?")
+        filtro.Kirsch(filename[1], k)
 
 window = tk.Tk()
 window.title("Segmentación Parcial")
@@ -41,13 +68,16 @@ promediadorBt = tk.Button(text="FILTRO PROMEDIADOR", width=30, height=1, font=("
 promediadorBt.bind("<Button-1>", promediador)
 promediadorBt.place(x=40, y = 200)
 mediaBt = tk.Button(text="FILTRO MEDIA", width=30, height=1, font=("Courier", 16), anchor="center", foreground="pink", background="black")
-#histgrisBt.bind("<Button-1>", histogramGris)
+mediaBt.bind("<Button-1>", media)
 mediaBt.place(x=40, y = 250)
-maxminBt = tk.Button(text="FILTRO MAX-MIN", width=30, height=1, font=("Courier", 16), anchor="center", foreground="yellow", background="black")
-#maxminBt.bind("<Button-1>", expandirHist)
-maxminBt.place(x=40, y = 300)
+maxBt = tk.Button(text="FILTRO MAXIMO", width=30, height=1, font=("Courier", 16), anchor="center", foreground="yellow", background="black")
+maxBt.bind("<Button-1>", maximo)
+maxBt.place(x=40, y = 300)
+minBt = tk.Button(text="FILTRO MINIMO", width=30, height=1, font=("Courier", 16), anchor="center", foreground="yellow", background="black")
+minBt.bind("<Button-1>", minimo)
+minBt.place(x=40, y = 350)
 mascaraKirschBt = tk.Button(text="MÁSCARA DE KIRSCH", width=30, height=1, font=("Courier", 16), anchor="center", foreground="orange", background="black")
-#mascaraKirschBt.bind("<Button-1>", contraerHist)
+mascaraKirschBt.bind("<Button-1>", kir)
 mascaraKirschBt.place(x=450, y = 100)
 frame.pack()
 file = None
