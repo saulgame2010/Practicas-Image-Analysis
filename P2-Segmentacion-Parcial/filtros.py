@@ -6,6 +6,13 @@ import time
 from PIL import Image, ImageFilter
 
 class Filtros:
+
+    def mostrarImagen(self, titulo, imgOriginal, imgProcesada, proceso, ruta):
+        cv2.imshow(titulo, np.hstack([imgOriginal, imgProcesada]))
+        cv2.imwrite("./imgRes/" + proceso + "_" + ruta, imgProcesada)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+
     def filtroPromediador(self, ruta, n):
         img = cv2.imread("./img/" + ruta, cv2.IMREAD_GRAYSCALE)
         elementos = n * n;        
@@ -13,18 +20,12 @@ class Filtros:
         kernel = np.ones((n,n),np.float32)/elementos
         #Filtra la imagen utilizando el kernel anterior
         dst = cv2.filter2D(img,-1,kernel)
-        cv2.imshow("Promediada", np.hstack([img, dst]))
-        cv2.imwrite("./imgRes/promediador_" + ruta, dst)
-        cv2.waitKey()
-        cv2.destroyAllWindows()
+        self.mostrarImagen("Promediada", img, dst, "prom", ruta)        
 
     def filtroMedia(self, ruta, n):        
         image = cv2.imread("./img/" + ruta, cv2.IMREAD_GRAYSCALE)        
-        dst = cv2.medianBlur(image, n)        
-        cv2.imshow("Media aritmética", np.hstack([image, dst]))       
-        cv2.imwrite("./imgRes/media_" + ruta, dst)        
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
+        dst = cv2.medianBlur(image, n)
+        self.mostrarImagen("Media aritmetica", image, dst, "medArt", ruta)        
 
     def ObtenerVecinos(self, copia, i, j):
         pixel_list = []
@@ -152,68 +153,39 @@ class Filtros:
         npK8 = np.asarray(k8)
         if k == 1:
             dst = cv2.filter2D(image,-1,npK1)
-            cv2.imshow("Máscara de Kirsch ", np.hstack([image, dst]))
-            cv2.imwrite("./imgRes/kir1_" + ruta, dst)
-            cv2.waitKey(0)
-            cv2.destroyAllWindows()
+            self.mostrarImagen("Mascara de Kirsch", image, dst, "kir1", ruta)            
         elif k == 2:
             dst = cv2.filter2D(image,-1,npK2)
-            cv2.imshow("Máscara de Kirsch ", np.hstack([image, dst]))
-            cv2.imwrite("./imgRes/kir2_" + ruta, dst)
-            cv2.waitKey(0)
-            cv2.destroyAllWindows()
+            self.mostrarImagen("Mascara de Kirsch", image, dst, "kir2", ruta)
         elif k == 3:
             dst = cv2.filter2D(image,-1,npK3)
-            cv2.imshow("Máscara de Kirsch ", np.hstack([image, dst]))
-            cv2.imwrite("./imgRes/kir3_" + ruta, dst)
-            cv2.waitKey(0)
-            cv2.destroyAllWindows()
+            self.mostrarImagen("Mascara de Kirsch", image, dst, "kir3", ruta)
         elif k == 4:
             dst = cv2.filter2D(image,-1,npK4)
-            cv2.imshow("Máscara de Kirsch ", np.hstack([image, dst]))
-            cv2.imwrite("./imgRes/kir4_" + ruta, dst)
-            cv2.waitKey(0)
-            cv2.destroyAllWindows()
+            self.mostrarImagen("Mascara de Kirsch", image, dst, "kir4", ruta)
         elif k == 5:
             dst = cv2.filter2D(image,-1,npK5)
-            cv2.imshow("Máscara de Kirsch ", np.hstack([image, dst]))
-            cv2.imwrite("./imgRes/kir5_" + ruta, dst)
-            cv2.waitKey(0)
-            cv2.destroyAllWindows()
+            self.mostrarImagen("Mascara de Kirsch", image, dst, "kir5", ruta)
         elif k == 6:
             dst = cv2.filter2D(image,-1,npK6)
-            cv2.imshow("Máscara de Kirsch ", np.hstack([image, dst]))
-            cv2.imwrite("./imgRes/kir6_" + ruta, dst)
-            cv2.waitKey(0)
-            cv2.destroyAllWindows()
+            self.mostrarImagen("Mascara de Kirsch", image, dst, "kir6", ruta)
         elif k == 7:
             dst = cv2.filter2D(image,-1,npK7)
-            cv2.imshow("Máscara de Kirsch ", np.hstack([image, dst]))
-            cv2.imwrite("./imgRes/kir7_" + ruta, dst)
-            cv2.waitKey(0)
-            cv2.destroyAllWindows()
+            self.mostrarImagen("Mascara de Kirsch", image, dst, "kir7", ruta)
         elif k == 8:
             dst = cv2.filter2D(image,-1,npK8)
-            cv2.imshow("Máscara de Kirsch ", np.hstack([image, dst]))
-            cv2.imwrite("./imgRes/kir8_" + ruta, dst)
-            cv2.waitKey(0)
-            cv2.destroyAllWindows()
+            self.mostrarImagen("Mascara de Kirsch", image, dst, "kir8", ruta)
 
     def binarizacion(self, ruta, umbral, tipoBin):
         image = cv2.imread("./img/" + ruta, cv2.IMREAD_GRAYSCALE)
         if tipoBin == 1:
             ret, imgBin = cv2.threshold(image, umbral, 255, cv2.THRESH_BINARY)
-            cv2.imshow('Imagen binarizada', np.hstack([image, imgBin]))
-            cv2.imwrite("./imgRes/bin_" + ruta, imgBin)
-            cv2.waitKey(0)
-            cv2.destroyAllWindows()
+            self.mostrarImagen("Imagen binarizada", image, imgBin, "bin", ruta)            
         elif tipoBin == 2:
             ret, imgBin = cv2.threshold(image, umbral, 255, cv2.THRESH_BINARY_INV)
-            cv2.imshow('Imagen binarizada', np.hstack([image, imgBin]))
-            cv2.imwrite("./imgRes/binInv_" + ruta, imgBin)
-            cv2.waitKey(0)
-            cv2.destroyAllWindows()
+            self.mostrarImagen("Imagen binarizada", image, imgBin, "binInv", ruta)
 
 
     def ruidoSalPim(self, ruta, porcentaje):
-        print("Hola chavales")
+        image = cv2.imread("./img/" + ruta, cv2.IMREAD_GRAYSCALE)        
+        
