@@ -190,13 +190,24 @@ class Filtros:
     def ruidoSalPim(self, ruta, porcentaje):
         image = cv2.imread("./img/" + ruta, cv2.IMREAD_GRAYSCALE)
         imgOriginal = cv2.imread("./img/" + ruta, cv2.IMREAD_GRAYSCALE)
+        aux = round((image.size * porcentaje)//800)
         ancho, alto = image.shape
-        sal = np.ceil(porcentaje * image.size * 0.5)
-        for x in range(ancho):
-            for y in range(alto):
-                image.itemset((randint(0, x), randint(0, y)), sal)
-        pimienta = np.ceil(porcentaje * image.size * (1. -0.5))
-        for x in range(ancho):
-            for y in range(alto):
-                image.itemset((randint(0, x), randint(0, y)), pimienta)
+        min = 0
+        max = 255
+        #Píxeles blancos
+        for i in range(aux):
+            coordenada_x = randint(2, ancho - 2)
+            coordenada_y = randint(2, alto -2)
+            image.itemset((coordenada_x, coordenada_y), max)
+            image.itemset((coordenada_x + 1, coordenada_y), max)
+            image.itemset((coordenada_x, coordenada_y + 1), max)
+            image.itemset((coordenada_x + 1, coordenada_y + 1), max)
+        #Píxeles negros
+        for i in range(aux):
+            coordenada_x = randint(2, ancho - 2)
+            coordenada_y = randint(2, alto -2)
+            image.itemset((coordenada_x, coordenada_y), min)
+            image.itemset((coordenada_x + 1, coordenada_y), min)
+            image.itemset((coordenada_x, coordenada_y + 1), min)
+            image.itemset((coordenada_x + 1, coordenada_y + 1), min)
         self.mostrarImagen("Imagen con ruido", imgOriginal, image, "sal-pim", ruta)

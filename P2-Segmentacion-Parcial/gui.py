@@ -62,7 +62,7 @@ def salPim(event):
     if(ruta == None):
         messagebox.showerror("Error", "Selecciona una imagen primero")
     else:
-        porcentaje = (simpledialog.askfloat(title="Valor del umbral", prompt="Seleccione el porcentaje de ruido"))/100
+        porcentaje = simpledialog.askfloat(title="Valor del umbral", prompt="Seleccione el porcentaje de ruido")
         filtro.ruidoSalPim(filename[1], porcentaje)
 
 window = tk.Tk()
