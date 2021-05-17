@@ -50,6 +50,21 @@ def kir(event):
         k = simpledialog.askinteger(title="K", prompt="Cual kernel quieres utilizar?")
         filtro.Kirsch(filename[1], k)
 
+def binarizar(event):
+    if(ruta == None):
+        messagebox.showerror("Error", "Selecciona una imagen primero")
+    else:
+        umbral = simpledialog.askinteger(title="Valor del umbral", prompt="Seleccione el valor del umbral")
+        tipoBin = simpledialog.askinteger(title="Valor del umbral", prompt="Seleccione el tipo de binarizacion\n1.Normal\n2.Inversa")
+        filtro.binarizacion(filename[1], umbral, tipoBin)
+
+def salPim(event):
+    if(ruta == None):
+        messagebox.showerror("Error", "Selecciona una imagen primero")
+    else:
+        porcentaje = (simpledialog.askfloat(title="Valor del umbral", prompt="Seleccione el porcentaje de ruido"))/100
+        filtro.ruidoSalPim(filename[1], porcentaje)
+
 window = tk.Tk()
 window.title("Segmentación Parcial")
 #Vamos a crear el contenedor de los elementos
@@ -70,15 +85,21 @@ promediadorBt.place(x=40, y = 200)
 mediaBt = tk.Button(text="FILTRO MEDIA", width=30, height=1, font=("Courier", 16), anchor="center", foreground="pink", background="black")
 mediaBt.bind("<Button-1>", media)
 mediaBt.place(x=40, y = 250)
-maxBt = tk.Button(text="FILTRO MAXIMO", width=30, height=1, font=("Courier", 16), anchor="center", foreground="yellow", background="black")
+maxBt = tk.Button(text="FILTRO MÁXIMO", width=30, height=1, font=("Courier", 16), anchor="center", foreground="yellow", background="black")
 maxBt.bind("<Button-1>", maximo)
 maxBt.place(x=40, y = 300)
-minBt = tk.Button(text="FILTRO MINIMO", width=30, height=1, font=("Courier", 16), anchor="center", foreground="yellow", background="black")
+minBt = tk.Button(text="FILTRO MÍNIMO", width=30, height=1, font=("Courier", 16), anchor="center", foreground="coral", background="black")
 minBt.bind("<Button-1>", minimo)
 minBt.place(x=40, y = 350)
 mascaraKirschBt = tk.Button(text="MÁSCARA DE KIRSCH", width=30, height=1, font=("Courier", 16), anchor="center", foreground="orange", background="black")
 mascaraKirschBt.bind("<Button-1>", kir)
 mascaraKirschBt.place(x=450, y = 100)
+binarizacionBt = tk.Button(text="BINARIZAR IMAGEN", width=30, height=1, font=("Courier", 16), anchor="center", foreground="cyan", background="black")
+binarizacionBt.bind("<Button-1>", binarizar)
+binarizacionBt.place(x=450, y = 150)
+sal_pimBt = tk.Button(text="RUIDO SAL Y PIMIENTA", width=30, height=1, font=("Courier", 16), anchor="center", foreground="red", background="black")
+sal_pimBt.bind("<Button-1>", salPim)
+sal_pimBt.place(x=450, y = 200)
 frame.pack()
 file = None
 ruta = None
