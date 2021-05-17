@@ -17,15 +17,15 @@ class Filtros:
         cv2.imwrite("./imgRes/promediador_" + ruta, dst)
 
     def filtroMedia(self, ruta, n):
-        # read the image
+        
         image = cv2.imread("./img/" + ruta, cv2.IMREAD_GRAYSCALE)
-        # apply the 3x3 median filter on the image
+        
         dst = cv2.medianBlur(image, n)
-        # display image
+        
         cv2.imshow("Media aritmética", dst)
-        # save image to disk
+        
         cv2.imwrite("./imgRes/media_" + ruta, dst)
-        # pause the execution of the script until a key on the keyboard is pressed
+        
         cv2.waitKey(0)
 
     def ObtenerVecinos(self, copia, i, j):
