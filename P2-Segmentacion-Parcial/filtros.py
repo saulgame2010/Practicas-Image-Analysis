@@ -3,7 +3,8 @@ import numpy as np
 from matplotlib import pyplot as plt
 from PIL import Image
 import time
-from PIL import Image, ImageFilter
+from PIL import Image
+from random import randint, uniform,random
 
 class Filtros:
 
@@ -187,5 +188,15 @@ class Filtros:
 
 
     def ruidoSalPim(self, ruta, porcentaje):
-        image = cv2.imread("./img/" + ruta, cv2.IMREAD_GRAYSCALE)        
-        
+        image = cv2.imread("./img/" + ruta, cv2.IMREAD_GRAYSCALE)
+        imgOriginal = cv2.imread("./img/" + ruta, cv2.IMREAD_GRAYSCALE)
+        ancho, alto = image.shape
+        sal = np.ceil(porcentaje * image.size * 0.5)
+        for x in range(ancho):
+            for y in range(alto):
+                image.itemset((randint(0, x), randint(0, y)), sal)
+        pimienta = np.ceil(porcentaje * image.size * (1. -0.5))
+        for x in range(ancho):
+            for y in range(alto):
+                image.itemset((randint(0, x), randint(0, y)), pimienta)
+        self.mostrarImagen("Imagen con ruido", imgOriginal, image, "sal-pim", ruta)
