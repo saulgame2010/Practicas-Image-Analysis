@@ -65,6 +65,13 @@ def salPim(event):
         porcentaje = simpledialog.askfloat(title="Valor del umbral", prompt="Seleccione el porcentaje de ruido")
         filtro.ruidoSalPim(filename[1], porcentaje)
 
+def gauss(event):
+    if(ruta == None):
+        messagebox.showerror("Error", "Selecciona una imagen primero")
+    else:
+        des = simpledialog.askfloat(title="Valor del umbral", prompt="Seleccione el porcentaje de ruido")
+        filtro.gaussiano(filename[1], des)
+
 window = tk.Tk()
 window.title("Segmentación Parcial")
 #Vamos a crear el contenedor de los elementos
@@ -100,6 +107,9 @@ binarizacionBt.place(x=450, y = 150)
 sal_pimBt = tk.Button(text="RUIDO SAL Y PIMIENTA", width=30, height=1, font=("Courier", 16), anchor="center", foreground="red", background="black")
 sal_pimBt.bind("<Button-1>", salPim)
 sal_pimBt.place(x=450, y = 200)
+gaussBt = tk.Button(text="RUIDO GAUSSIANO", width=30, height=1, font=("Courier", 16), anchor="center", foreground="olive", background="black")
+gaussBt.bind("<Button-1>", gauss)
+gaussBt.place(x=450, y = 250)
 frame.pack()
 file = None
 ruta = None
