@@ -69,7 +69,7 @@ def gauss(event):
     if(ruta == None):
         messagebox.showerror("Error", "Selecciona una imagen primero")
     else:
-        des = simpledialog.askfloat(title="Valor del umbral", prompt="Seleccione el porcentaje de ruido")
+        des = simpledialog.askfloat(title="Valor del umbral", prompt="Seleccione la desviacion estandar a utilizar")
         filtro.gaussiano(filename[1], des)
 
 window = tk.Tk()
