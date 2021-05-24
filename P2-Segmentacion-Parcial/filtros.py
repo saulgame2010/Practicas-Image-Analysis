@@ -9,8 +9,8 @@ from random import randint, uniform,random
 class Filtros:
 
     def mostrarImagen(self, titulo, imgOriginal, imgProcesada, proceso, ruta):
-        cv2.imshow(titulo, np.hstack([imgOriginal, imgProcesada]))
-        cv2.imwrite("./imgRes/" + proceso + "_" + ruta, imgProcesada)
+        cv2.imshow(titulo, imgProcesada)
+        cv2.imwrite("./img/" + proceso + "_" + ruta, imgProcesada)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
 
