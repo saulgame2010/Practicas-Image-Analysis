@@ -210,7 +210,7 @@ class Filtros:
             image.itemset((coordenada_x + 1, coordenada_y), min)
             image.itemset((coordenada_x, coordenada_y + 1), min)
             image.itemset((coordenada_x + 1, coordenada_y + 1), min)
-        self.mostrarImagen("Imagen con ruido", imgOriginal, image, "sal-pim", ruta)
+        self.mostrarImagen("Imagen con ruido_", imgOriginal, image, "sal-pim"+str(porcentaje), ruta)
 
     def gasuss_noise(self, image, mean = 0, var=0.001):
         image = np.array(image/255, dtype=float)
@@ -230,4 +230,4 @@ class Filtros:
         # Agregue ruido gaussiano con un valor medio de 0 y una varianza de 0.01
         var = des**2
         out = self.gasuss_noise(img, var)
-        self.mostrarImagen("Ruido Gaussiano", img, out, "gauss", ruta)
+        self.mostrarImagen("Ruido Gaussiano", img, out, "gauss"+str(des), ruta)
