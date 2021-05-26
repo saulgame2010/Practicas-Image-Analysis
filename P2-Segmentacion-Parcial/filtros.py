@@ -132,21 +132,17 @@ class Filtros:
         self.mostrarImagen("Ruido Gaussiano", img, out, "gauss"+str(des), ruta)
 
     def minimumBoxFilter(self, n, path_to_image):
-        img = cv2.imread("./img/" + path_to_image, cv2.IMREAD_GRAYSCALE)
-        # Creates the shape of the kernel
+        img = cv2.imread("./img/" + path_to_image, cv2.IMREAD_GRAYSCALE)        
         size = (n, n)
         shape = cv2.MORPH_RECT
         kernel = cv2.getStructuringElement(shape, size)
-        # Applies the minimum filter with kernel NxN
         imgResult = cv2.erode(img, kernel)
         self.mostrarImagen("Filtro minimo", img, imgResult, "min", path_to_image)
 
     def maximumBoxFilter(self, n, path_to_image):
-        img = cv2.imread("./img/" + path_to_image, cv2.IMREAD_GRAYSCALE)
-        # Creates the shape of the kernel
+        img = cv2.imread("./img/" + path_to_image, cv2.IMREAD_GRAYSCALE)        
         size = (n,n)
         shape = cv2.MORPH_RECT
-        kernel = cv2.getStructuringElement(shape, size)
-        # Applies the maximum filter with kernel NxN
+        kernel = cv2.getStructuringElement(shape, size)        
         imgResult = cv2.dilate(img, kernel)
         self.mostrarImagen("Filtro maximo", img, imgResult, "max", path_to_image)
