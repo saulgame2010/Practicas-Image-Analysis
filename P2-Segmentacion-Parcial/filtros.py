@@ -2,14 +2,13 @@ import cv2
 import numpy as np
 from matplotlib import pyplot as plt
 from PIL import Image
-import time
-from PIL import Image
-from random import randint, uniform,random
+from random import randint
+from tkinter import messagebox
 
 class Filtros:
 
     def mostrarImagen(self, titulo, imgOriginal, imgProcesada, proceso, ruta):
-        cv2.imshow(titulo, imgProcesada)
+        cv2.imshow(titulo, np.hstack([imgOriginal, imgProcesada]))
         cv2.imwrite("./img/" + proceso + "_" + ruta, imgProcesada)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
@@ -28,112 +27,6 @@ class Filtros:
         dst = cv2.medianBlur(image, n)
         self.mostrarImagen("Media aritmetica", image, dst, "medArt", ruta)        
 
-    def ObtenerVecinos(self, copia, i, j):
-        pixel_list = []
-        try: 
-            pixel_list.append(copia.getpixel((i-1, j-1)))
-        except: 
-            pixel_list.append((0, 0, 0))
-        try: 
-            pixel_list.append(copia.getpixel((i, j-1)))
-        except: 
-            pixel_list.append((0, 0, 0))
-        try: 
-            pixel_list.append(copia.getpixel((i+1, j-1)))
-        except: 
-            pixel_list.append((0, 0, 0))
-        try: 
-            pixel_list.append(copia.getpixel((i-1, j)))
-        except: 
-            pixel_list.append((0, 0, 0))
-        try: 
-            pixel_list.append(copia.getpixel((i, j)))
-        except: 
-            pixel_list.append((0, 0, 0))
-        try: 
-            pixel_list.append(copia.getpixel((i+1, j)))
-        except: 
-            pixel_list.append((0, 0, 0))
-        try: 
-            pixel_list.append(copia.getpixel((i-1, j+1)))
-        except: 
-            pixel_list.append((0, 0, 0))
-        try: 
-            pixel_list.append(copia.getpixel((i, j+1)))
-        except: 
-            pixel_list.append((0, 0, 0))
-        try: 
-            pixel_list.append(copia.getpixel((i+1, j+1)))
-        except: 
-            pixel_list.append((0, 0, 0))
-        return pixel_list
-
-    def Maximo(self, nombre):
-        tiempo_de_inicio = time.time()
-        img = Image.open("./img/" + nombre)
-        img.show()        
-
-        copia = Image.new('RGB', img.size)
-        datosImg = Image.Image.getdata(img)
-        copia.putdata(datosImg)
-        ancho, alto = img.size
-
-        for i in range(ancho):
-            for j in range(alto):
-                r, g, b = copia.getpixel((i,j))
-                x = (r + g + b) / 3
-                intx = int (x)
-                pixel = tuple ([intx, intx, intx])
-                copia.putpixel((i,j), pixel)
-
-        for i in range(ancho):
-            for j in range(alto):
-                vecindades = self.ObtenerVecinos(img, i, j)
-                maxi = max(((vecindades[0][0]), (vecindades[1][0]), (vecindades[2][0]), 
-                            (vecindades[3][0]), (vecindades[4][0]), (vecindades[5][0]), 
-                            (vecindades[6][0]), (vecindades[7][0]), (vecindades[8][0])))
-                res = maxi
-                pixel = tuple([res, res, res])
-                copia.putpixel((i, j), pixel)
-
-        copia.show()
-        copia.save("./imgRes/max_" + nombre)        
-        tiempo_de_terminacion = time.time()
-        print ("Abrir la imagen tardo: ", tiempo_de_terminacion - tiempo_de_inicio, " segundos")
-
-    def Minimo(self, nombre):
-        tiempo_de_inicio = time.time()
-        img = Image.open("./img/" + nombre)
-        img.show()        
-
-        copia = Image.new('RGB', img.size)
-        datosImg = Image.Image.getdata(img)
-        copia.putdata(datosImg)
-        ancho, alto = img.size
-
-        for i in range(ancho):
-            for j in range(alto):
-                r, g, b = copia.getpixel((i,j))
-                x = (r + g + b) / 3
-                intx = int (x)
-                pixel = tuple ([intx, intx, intx])
-                copia.putpixel((i,j), pixel)
-
-        for i in range(ancho):
-            for j in range(alto):
-                vecindades = self.ObtenerVecinos(img, i, j)
-                mini = min(((vecindades[0][0]), (vecindades[1][0]), (vecindades[2][0]), 
-                            (vecindades[3][0]), (vecindades[4][0]), (vecindades[5][0]), 
-                            (vecindades[6][0]), (vecindades[7][0]), (vecindades[8][0])))
-                res = mini
-                pixel = tuple([res, res, res])
-                copia.putpixel((i, j), pixel)
-
-        copia.show()
-        copia.save("./imgRes/min_" + nombre)        
-        tiempo_de_terminacion = time.time()
-        print ("Abrir la imagen tardo: ", tiempo_de_terminacion - tiempo_de_inicio, " segundos")
-
     def Kirsch(self, ruta, k):
         image = cv2.imread("./img/" + ruta, cv2.IMREAD_GRAYSCALE)
         k1 = [ [-3, -3, 5], [-3, 0, 5], [-3, -3, -5] ]
@@ -150,8 +43,9 @@ class Filtros:
         npK6 = np.asarray(k6)
         k7 = [ [-3, -3, -3], [-3, 0, -3], [5, 5, 5] ]
         npK7 = np.asarray(k7)
-        k8 = [ [-3, -3, -3], [-3, 0, 5], [-3, 5, 5] ]
+        k8 = [ [-3, -3, -3], [-3, 0, 5], [-3, 5, 5] ]        
         npK8 = np.asarray(k8)
+        mK = [npK1, npK2, npK3, npK4, npK5, npK6, npK7, npK8]
         if k == 1:
             dst = cv2.filter2D(image,-1,npK1)
             self.mostrarImagen("Mascara de Kirsch", image, dst, "kir1", ruta)            
@@ -176,6 +70,12 @@ class Filtros:
         elif k == 8:
             dst = cv2.filter2D(image,-1,npK8)
             self.mostrarImagen("Mascara de Kirsch", image, dst, "kir8", ruta)
+        elif k == 9:
+            for i in range(1, 8):
+                dst = cv2.filter2D(image, -1, mK[i])
+            self.mostrarImagen("Mascaras de Kirsch", image, dst, "mK", ruta)
+        else:
+            messagebox.showerror("Error", "Esa opcion no existe")
 
     def binarizacion(self, ruta, umbral, tipoBin):
         image = cv2.imread("./img/" + ruta, cv2.IMREAD_GRAYSCALE)
@@ -185,7 +85,6 @@ class Filtros:
         elif tipoBin == 2:
             ret, imgBin = cv2.threshold(image, umbral, 255, cv2.THRESH_BINARY_INV)
             self.mostrarImagen("Imagen binarizada", image, imgBin, "binInv", ruta)
-
 
     def ruidoSalPim(self, ruta, porcentaje):
         image = cv2.imread("./img/" + ruta, cv2.IMREAD_GRAYSCALE)
@@ -231,3 +130,23 @@ class Filtros:
         var = des**2
         out = self.gasuss_noise(img, var)
         self.mostrarImagen("Ruido Gaussiano", img, out, "gauss"+str(des), ruta)
+
+    def minimumBoxFilter(self, n, path_to_image):
+        img = cv2.imread("./img/" + path_to_image, cv2.IMREAD_GRAYSCALE)
+        # Creates the shape of the kernel
+        size = (n, n)
+        shape = cv2.MORPH_RECT
+        kernel = cv2.getStructuringElement(shape, size)
+        # Applies the minimum filter with kernel NxN
+        imgResult = cv2.erode(img, kernel)
+        self.mostrarImagen("Filtro minimo", img, imgResult, "min", path_to_image)
+
+    def maximumBoxFilter(self, n, path_to_image):
+        img = cv2.imread("./img/" + path_to_image, cv2.IMREAD_GRAYSCALE)
+        # Creates the shape of the kernel
+        size = (n,n)
+        shape = cv2.MORPH_RECT
+        kernel = cv2.getStructuringElement(shape, size)
+        # Applies the maximum filter with kernel NxN
+        imgResult = cv2.dilate(img, kernel)
+        self.mostrarImagen("Filtro maximo", img, imgResult, "max", path_to_image)

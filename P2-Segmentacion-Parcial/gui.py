@@ -1,3 +1,4 @@
+from histogram import Histograma
 from filtros import Filtros
 import tkinter as tk
 from pathlib import Path
@@ -17,6 +18,18 @@ def cargarImg(event):
     ruta = str(file)    
     filename = os.path.split(ruta)
 
+def histogramColor(event):
+    if(ruta == None):
+        messagebox.showerror("Error", "Selecciona una imagen primero")
+    else:
+        histograma.histogramaColor(filename[1])
+
+def histogramGris(event):
+    if(ruta == None):
+        messagebox.showerror("Error", "Selecciona una imagen primero")
+    else:
+        histograma.histogramaGris(filename[1])
+
 def promediador(event):
     if(ruta == None):
         messagebox.showerror("Error", "Selecciona una imagen primero")
@@ -35,19 +48,21 @@ def maximo(event):
     if(ruta == None):
         messagebox.showerror("Error", "Selecciona una imagen primero")
     else:
-        filtro.Maximo(filename[1])
+        n = simpledialog.askinteger(title="K", prompt="Cual es el tamaño de la matriz a usar?")
+        filtro.maximumBoxFilter(n, filename[1])
 
 def minimo(event):
     if(ruta == None):
         messagebox.showerror("Error", "Selecciona una imagen primero")
     else:
-        filtro.Minimo(filename[1])
+        n = simpledialog.askinteger(title="K", prompt="Cual es el tamaño de la matriz a usar?")
+        filtro.minimumBoxFilter(n, filename[1])
 
 def kir(event):
     if(ruta == None):
         messagebox.showerror("Error", "Selecciona una imagen primero")
     else:
-        k = simpledialog.askinteger(title="K", prompt="Cual kernel quieres utilizar?")
+        k = simpledialog.askinteger(title="K", prompt="Cual kernel quieres utilizar?\nIngrese 9 si quiere aplicar todas las mascaras")
         filtro.Kirsch(filename[1], k)
 
 def binarizar(event):
@@ -107,15 +122,22 @@ binarizacionBt.place(x=450, y = 150)
 sal_pimBt = tk.Button(text="RUIDO SAL Y PIMIENTA", width=30, height=1, font=("Courier", 16), anchor="center", foreground="red", background="black")
 sal_pimBt.bind("<Button-1>", salPim)
 sal_pimBt.place(x=450, y = 200)
-gaussBt = tk.Button(text="RUIDO GAUSSIANO", width=30, height=1, font=("Courier", 16), anchor="center", foreground="olive", background="black")
+"""gaussBt = tk.Button(text="RUIDO GAUSSIANO", width=30, height=1, font=("Courier", 16), anchor="center", foreground="olive", background="black")
 gaussBt.bind("<Button-1>", gauss)
-gaussBt.place(x=450, y = 250)
+gaussBt.place(x=450, y = 250)"""
+histcolorBt = tk.Button(text="HISTOGRAMA RGB", width=30, height=1, font=("Courier", 16), anchor="center", foreground="lime", background="black")
+histcolorBt.bind("<Button-1>", histogramColor)
+histcolorBt.place(x=450, y = 250)
+histgrisBt = tk.Button(text="HISTOGRAMA GRISES", width=30, height=1, font=("Courier", 16), anchor="center", foreground="pink", background="black")
+histgrisBt.bind("<Button-1>", histogramGris)
+histgrisBt.place(x=450, y = 300)
 frame.pack()
 file = None
 ruta = None
 filename = None
 try:
     filtro = Filtros()
+    histograma = Histograma()
     window.mainloop()
 except KeyboardInterrupt:
     sys.exit()
