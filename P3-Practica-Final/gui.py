@@ -1,3 +1,4 @@
+from morfologia import Morfologia
 from brillo import Brillo
 from histogram import Histograma
 from filtros import Filtros
@@ -124,34 +125,48 @@ def gauss(event):
         des = simpledialog.askfloat(title="Valor del umbral", prompt="Seleccione la desviacion estandar a utilizar")
         filtro.gaussiano(filename[1], des)
 
+def topH(event):
+    if(ruta == None):
+        messagebox.showerror("Error", "Selecciona una imagen primero")
+    else:
+        n = simpledialog.askinteger(title="Kernel", prompt="Establece el tamaño del kernel")
+        morf.topHat(filename[1], n)
+
+def blackH(event):
+    if(ruta == None):
+        messagebox.showerror("Error", "Selecciona una imagen primero")
+    else:
+        n = simpledialog.askinteger(title="Kernel", prompt="Establece el tamaño del kernel")
+        morf.blackHat(filename[1], n)
+
 window = tk.Tk()
 window.title("Práctica Final")
 width = window.winfo_screenwidth()
 height = window.winfo_screenheight()
 #Vamos a crear el contenedor de los elementos
-frame = tk.Frame(master = window, width = width, height = height, bg = "black")
+frame = tk.Frame(master = window, width = 1300, height = 580, bg = "black")
 #Aquí empezamos a crear los elementos, empezamos por el título, que es un Label
 tituloLb = tk.Label(text="Práctica Final", foreground="crimson", background="black", width="35", height="5", font=("Courier", 16))
-tituloLb.place(x=220, y=0)
+tituloLb.place(x=420, y=0)
 #Creamos un botón para cargar una imagen
-cargarImgBt = tk.Button(text="CARGAR IMAGEN", width=30, height=1, font=("Courier", 16), anchor="center", foreground="blue", background="black")
+cargarImgBt = tk.Button(text="CARGAR IMAGEN", width=30, height=1, font=("Courier", 16), anchor="center", foreground="red", background="black")
 cargarImgBt.bind("<Button-1>", cargarImg)
 cargarImgBt.place(x=40, y = 100)
 #Creamos un label para saber el status del archivo
 filestatus = tk.Label(text="No se ha seleccionado archivo...", foreground="white", background="black", width=50, height=1, font=("Courier", 10), anchor="center")
 filestatus.place(x=40, y=150)
-histcolorBt = tk.Button(text="HISTOGRAMA RGB", width=30, height=1, font=("Courier", 16), anchor="center", foreground="lime", background="black")
+histcolorBt = tk.Button(text="HISTOGRAMA RGB", width=30, height=1, font=("Courier", 16), anchor="center", foreground="fuchsia", background="black")
 histcolorBt.bind("<Button-1>", histogramColor)
 histcolorBt.place(x=40, y = 200)
-histgrisBt = tk.Button(text="HISTOGRAMA GRISES", width=30, height=1, font=("Courier", 16), anchor="center", foreground="pink", background="black")
+histgrisBt = tk.Button(text="HISTOGRAMA GRISES", width=30, height=1, font=("Courier", 16), anchor="center", foreground="lime", background="black")
 histgrisBt.bind("<Button-1>", histogramGris)
 histgrisBt.place(x=40, y = 250)
 #Creamos un botón para ecualizar la imagen
-ecImgBt = tk.Button(text="ECUALIZAR IMAGEN", width=30, height=1, font=("Courier", 16), anchor="center", foreground="red", background="black")
+ecImgBt = tk.Button(text="ECUALIZAR IMAGEN", width=30, height=1, font=("Courier", 16), anchor="center", foreground="yellow", background="black")
 ecImgBt.bind("<Button-1>", ecualizarImg)
 ecImgBt.place(x=40, y = 300)
 #Boton para expandir histograma
-expandirBtn = tk.Button(text="EXPANDIR HISTOGRAMA", width=30, height=1, font=("Courier", 16), anchor="center", foreground="yellow", background="black")
+expandirBtn = tk.Button(text="EXPANDIR HISTOGRAMA", width=30, height=1, font=("Courier", 16), anchor="center", foreground="blue", background="black")
 expandirBtn.bind("<Button-1>", expandirHist)
 expandirBtn.place(x=40, y = 350)
 #Boton para contraer histograma
@@ -159,34 +174,61 @@ contraerBtn = tk.Button(text="CONTRAER HISTOGRAMA", width=30, height=1, font=("C
 contraerBtn.bind("<Button-1>", contraerHist)
 contraerBtn.place(x=40, y = 400)
 #Boton para desplazar el histograma
-contraerBtn = tk.Button(text="DESPLAZAR HISTOGRAMA", width=30, height=1, font=("Courier", 16), anchor="center", foreground="purple", background="black")
+contraerBtn = tk.Button(text="DESPLAZAR HISTOGRAMA", width=30, height=1, font=("Courier", 16), anchor="center", foreground="blueviolet", background="black")
 contraerBtn.bind("<Button-1>", desplazarHist)
 contraerBtn.place(x=40, y = 450)
 #Boton para ecualización exponencial
-contraerBtn = tk.Button(text="ECUALIZACIÓN EXPONENCIAL", width=30, height=1, font=("Courier", 16), anchor="center", foreground="magenta", background="black")
-contraerBtn.bind("<Button-1>", exponencial)
-contraerBtn.place(x=40, y = 500)
-promediadorBt = tk.Button(text="FILTRO PROMEDIADOR", width=30, height=1, font=("Courier", 16), anchor="center", foreground="lime", background="black")
+expoBt = tk.Button(text="ECUALIZACIÓN EXPONENCIAL", width=30, height=1, font=("Courier", 16), anchor="center", foreground="orangered", background="black")
+expoBt.bind("<Button-1>", exponencial)
+expoBt.place(x=40, y = 500)
+promediadorBt = tk.Button(text="FILTRO PROMEDIADOR", width=30, height=1, font=("Courier", 16), anchor="center", foreground="gold", background="black")
 promediadorBt.bind("<Button-1>", promediador)
-promediadorBt.place(x=40, y = 550)
+promediadorBt.place(x=450, y = 100)
 mediaBt = tk.Button(text="FILTRO MEDIA", width=30, height=1, font=("Courier", 16), anchor="center", foreground="pink", background="black")
 mediaBt.bind("<Button-1>", media)
-mediaBt.place(x=40, y = 600)
-maxBt = tk.Button(text="FILTRO MÁXIMO", width=30, height=1, font=("Courier", 16), anchor="center", foreground="yellow", background="black")
+mediaBt.place(x=450, y = 150)
+maxBt = tk.Button(text="FILTRO MÁXIMO", width=30, height=1, font=("Courier", 16), anchor="center", foreground="lightgreen", background="black")
 maxBt.bind("<Button-1>", maximo)
-maxBt.place(x=40, y = 650)
+maxBt.place(x=450, y = 200)
 minBt = tk.Button(text="FILTRO MÍNIMO", width=30, height=1, font=("Courier", 16), anchor="center", foreground="coral", background="black")
 minBt.bind("<Button-1>", minimo)
-minBt.place(x=450, y = 100)
-mascaraKirschBt = tk.Button(text="MÁSCARAS DE KIRSCH", width=30, height=1, font=("Courier", 16), anchor="center", foreground="orange", background="black")
+minBt.place(x=450, y = 250)
+mascaraKirschBt = tk.Button(text="MÁSCARAS DE KIRSCH", width=30, height=1, font=("Courier", 16), anchor="center", foreground="slateblue", background="black")
 mascaraKirschBt.bind("<Button-1>", kir)
-mascaraKirschBt.place(x=450, y = 150)
-binarizacionBt = tk.Button(text="BINARIZAR IMAGEN", width=30, height=1, font=("Courier", 16), anchor="center", foreground="cyan", background="black")
+mascaraKirschBt.place(x=450, y = 300)
+binarizacionBt = tk.Button(text="BINARIZAR IMAGEN", width=30, height=1, font=("Courier", 16), anchor="center", foreground="tomato", background="black")
 binarizacionBt.bind("<Button-1>", binarizar)
-binarizacionBt.place(x=450, y = 200)
-sal_pimBt = tk.Button(text="RUIDO SAL Y PIMIENTA", width=30, height=1, font=("Courier", 16), anchor="center", foreground="red", background="black")
+binarizacionBt.place(x=450, y = 350)
+sal_pimBt = tk.Button(text="RUIDO SAL Y PIMIENTA", width=30, height=1, font=("Courier", 16), anchor="center", foreground="brown", background="black")
 sal_pimBt.bind("<Button-1>", salPim)
-sal_pimBt.place(x=450, y = 250)
+sal_pimBt.place(x=450, y = 400)
+multiUmbBt = tk.Button(text="MULTIUMBRALIZACIÓN", width=30, height=1, font=("Courier", 16), anchor="center", foreground="crimson", background="black")
+multiUmbBt.bind("<Button-1>", )
+multiUmbBt.place(x=450, y = 450)
+otsuBt = tk.Button(text="UMBRALIZACIÓN DE OTSU", width=30, height=1, font=("Courier", 16), anchor="center", foreground="gray", background="black")
+otsuBt.bind("<Button-1>", )
+otsuBt.place(x=450, y = 500)
+erosionBt = tk.Button(text="EROSIÓN", width=30, height=1, font=("Courier", 16), anchor="center", foreground="darkslateblue", background="black")
+erosionBt.bind("<Button-1>", )
+erosionBt.place(x=860, y = 100)
+dilatacionBt = tk.Button(text="DILATACIÓN", width=30, height=1, font=("Courier", 16), anchor="center", foreground="darksalmon", background="black")
+dilatacionBt.bind("<Button-1>", )
+dilatacionBt.place(x=860, y = 150)
+openingBt = tk.Button(text="OPENING", width=30, height=1, font=("Courier", 16), anchor="center", foreground="firebrick", background="black")
+openingBt.bind("<Button-1>", )
+openingBt.place(x=860, y = 200)
+closingBt = tk.Button(text="CLOSING", width=30, height=1, font=("Courier", 16), anchor="center", foreground="white", background="black")
+closingBt.bind("<Button-1>", )
+closingBt.place(x=860, y = 250)
+gradientBt = tk.Button(text="GRADIENTE", width=30, height=1, font=("Courier", 16), anchor="center", foreground="greenyellow", background="black")
+gradientBt.bind("<Button-1>", )
+gradientBt.place(x=860, y = 300)
+top_hatBt = tk.Button(text="TOP HAT", width=30, height=1, font=("Courier", 16), anchor="center", foreground="goldenrod", background="black")
+top_hatBt.bind("<Button-1>", topH)
+top_hatBt.place(x=860, y = 350)
+black_hatBt = tk.Button(text="BLACK HAT", width=30, height=1, font=("Courier", 16), anchor="center", foreground="khaki", background="black")
+black_hatBt.bind("<Button-1>", blackH)
+black_hatBt.place(x=860, y = 400)
 frame.pack()
 file = None
 ruta = None
@@ -195,6 +237,7 @@ try:
     filtro = Filtros()
     histograma = Histograma()
     brillo = Brillo()
+    morf = Morfologia()
     window.mainloop()
 except KeyboardInterrupt:
     sys.exit()

@@ -6,21 +6,22 @@ from mates import Mates
 class Brillo:
     def ecualizacion(self, ruta):
         img = cv2.imread("./img/" + ruta, cv2.IMREAD_GRAYSCALE)
-        img = cv2.equalizeHist(img)
+        imgRes = cv2.equalizeHist(img)
 
-        cv2.imshow('Histogramas', img)
-        hist = cv2.calcHist([img], [0], None, [256], [0, 256])
+        cv2.imshow('Histogramas', np.hstack([img, imgRes]))
+        hist = cv2.calcHist([imgRes], [0], None, [256], [0, 256])
         plt.plot(hist, color='gray' )
 
         plt.xlabel('intensidad de iluminacion')
         plt.ylabel('cantidad de pixeles')
         plt.show()
-        cv2.imwrite("./imgRes/ecualizada_"+ruta, img)
+        cv2.imwrite("./img/ecualizada_"+ruta, imgRes)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
 
     def expansion(self, ruta, nuevoMin, nuevoMax):
         img = cv2.imread("./img/" + ruta, cv2.IMREAD_GRAYSCALE)
+        imgRes = cv2.imread("./img/" + ruta, cv2.IMREAD_GRAYSCALE)
         tamanioImg = img.shape #(ancho, alto)
         print(tamanioImg)
         pixeles = [] #lista
@@ -34,20 +35,21 @@ class Brillo:
         recta = Mates()
         for x in range(tamanioImg[0]):
             for y in range(tamanioImg[1]):
-                img.itemset((x, y), recta.ecRecta(min, max, nuevoMin, nuevoMax, img.item(x, y)))
-        cv2.imshow("Histograma", img)
-        hist = cv2.calcHist([img], [0], None, [256], [0, 256])
+                imgRes.itemset((x, y), recta.ecRecta(min, max, nuevoMin, nuevoMax, img.item(x, y)))
+        cv2.imshow("Histograma", np.hstack([img, imgRes]))
+        hist = cv2.calcHist([imgRes], [0], None, [256], [0, 256])
         plt.plot(hist, color='gray' )
 
         plt.xlabel('intensidad de iluminacion')
         plt.ylabel('cantidad de pixeles')
         plt.show()
-        cv2.imwrite("./imgRes/expansion_"+ruta, img)
+        cv2.imwrite("./img/expansion_"+ruta, imgRes)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
     
     def contraccion(self, ruta, nuevoMin, nuevoMax):
         img = cv2.imread("./img/" + ruta, cv2.IMREAD_GRAYSCALE)
+        imgRes = cv2.imread("./img/" + ruta, cv2.IMREAD_GRAYSCALE)
         tamanioImg = img.shape
         pixeles = []
         for x in range(tamanioImg[0]):
@@ -60,38 +62,40 @@ class Brillo:
         contraccion = Mates()
         for x in range(tamanioImg[0]):
             for y in range(tamanioImg[1]):
-                img.itemset((x, y), contraccion.contraer(nuevoMax, nuevoMin, max, min, img.item(x, y)))
-        cv2.imshow("Histograma", img)
-        hist = cv2.calcHist([img], [0], None, [256], [0, 256])
+                imgRes.itemset((x, y), contraccion.contraer(nuevoMax, nuevoMin, max, min, img.item(x, y)))
+        cv2.imshow("Histograma", np.hstack([img, imgRes]))
+        hist = cv2.calcHist([imgRes], [0], None, [256], [0, 256])
         plt.plot(hist, color='gray' )
 
         plt.xlabel('intensidad de iluminacion')
         plt.ylabel('cantidad de pixeles')
         plt.show()
-        cv2.imwrite("./imgRes/contraccion_"+ruta, img)
+        cv2.imwrite("./img/contraccion_"+ruta, imgRes)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
 
     def desplazamiento(self, ruta, des):
         img = cv2.imread("./img/" + ruta, cv2.IMREAD_GRAYSCALE)
+        imgRes = cv2.imread("./img/" + ruta, cv2.IMREAD_GRAYSCALE)
         tamanioImg = img.shape
         desplazamiento = Mates()
         for x in range(tamanioImg[0]):
             for y in range(tamanioImg[1]):
-                img.itemset((x, y), desplazamiento.desplazar(des, img.item(x, y)))
-        cv2.imshow("Histograma", img)
-        hist = cv2.calcHist([img], [0], None, [256], [0, 256])
+                imgRes.itemset((x, y), desplazamiento.desplazar(des, img.item(x, y)))
+        cv2.imshow("Histograma", np.hstack([img, imgRes]))
+        hist = cv2.calcHist([imgRes], [0], None, [256], [0, 256])
         plt.plot(hist, color='gray' )
 
         plt.xlabel('intensidad de iluminacion')
         plt.ylabel('cantidad de pixeles')
         plt.show()
-        cv2.imwrite("./imgRes/desplazamiento_"+ruta, img)
+        cv2.imwrite("./img/desplazamiento_"+ruta, imgRes)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
 
     def ecExp(self, ruta, alfa):
         img = cv2.imread("./img/" + ruta, cv2.IMREAD_GRAYSCALE)
+        imgRes = cv2.imread("./img/" + ruta, cv2.IMREAD_GRAYSCALE)
         tamanioImg = img.shape
         totalElementos = img.size
         pixeles = []
@@ -118,14 +122,14 @@ class Brillo:
         cont = 0        
         for x in range(tamanioImg[0]):
             for y in range(tamanioImg[1]):
-                img.itemset((x, y), infoImg[indices[cont]])                
+                imgRes.itemset((x, y), infoImg[indices[cont]])                
                 cont = cont + 1
-        cv2.imshow("Histograma", img)
-        hist = cv2.calcHist([img], [0], None, [256], [0, 256])
+        cv2.imshow("Histograma", np.hstack([img, imgRes]))
+        hist = cv2.calcHist([imgRes], [0], None, [256], [0, 256])
         plt.plot(hist, color='gray' )
         plt.xlabel('intensidad de iluminacion')
         plt.ylabel('cantidad de pixeles')
         plt.show()
-        cv2.imwrite("./imgRes/ecExp_"+ruta, img)
+        cv2.imwrite("./img/ecExp_"+ruta, imgRes)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
