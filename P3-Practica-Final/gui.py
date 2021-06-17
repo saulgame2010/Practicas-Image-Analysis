@@ -1,3 +1,4 @@
+from brillo import Brillo
 from histogram import Histograma
 from filtros import Filtros
 import tkinter as tk
@@ -29,6 +30,42 @@ def histogramGris(event):
         messagebox.showerror("Error", "Selecciona una imagen primero")
     else:
         histograma.histogramaGris(filename[1])
+
+def ecualizarImg(event):
+    if(ruta == None):
+        messagebox.showerror("Error", "Selecciona una imagen primero")
+    else:
+        brillo.ecualizacion(filename[1])
+
+def expandirHist(event):
+    if(ruta == None):
+        messagebox.showerror("Error", "Selecciona una imagen primero")
+    else:
+        intervaloMin = simpledialog.askinteger(title="Nuevo intervalo mínimo", prompt="Cuál será el nuevo intervalo mínimo para el histograma?:")
+        intervaloMax = simpledialog.askinteger(title="Nuevo intervalo máximo", prompt="Cuál será el nuevo intervalo máximo para el histograma?:")
+        brillo.expansion(filename[1], intervaloMin, intervaloMax)
+
+def contraerHist(event):
+    if(ruta == None):
+        messagebox.showerror("Error", "Selecciona una imagen primero")
+    else:
+        intervaloMin = simpledialog.askinteger(title="Nuevo intervalo mínimo", prompt="Cuál será el nuevo intervalo mínimo para el histograma?:")
+        intervaloMax = simpledialog.askinteger(title="Nuevo intervalo máximo", prompt="Cuál será el nuevo intervalo máximo para el histograma?:")
+        brillo.contraccion(filename[1], intervaloMin, intervaloMax)
+
+def desplazarHist(event):
+    if(ruta == None):
+        messagebox.showerror("Error", "Selecciona una imagen primero")
+    else:
+        des = simpledialog.askinteger(title="Desplazar histograma", prompt="Cuál será el desplazamiento del histograma?:")
+        brillo.desplazamiento(filename[1], des)
+    
+def exponencial(event):
+    if(ruta == None):
+        messagebox.showerror("Error", "Selecciona una imagen primero")
+    else:
+        alfa = simpledialog.askfloat(title="Define el alfa", prompt="Cuál será el valor alfa?:")
+        brillo.ecExp(filename[1], alfa)
 
 def promediador(event):
     if(ruta == None):
@@ -68,7 +105,7 @@ def kir(event):
 def binarizar(event):
     if(ruta == None):
         messagebox.showerror("Error", "Selecciona una imagen primero")
-    else:
+    else:        
         umbral = simpledialog.askinteger(title="Valor del umbral", prompt="Seleccione el valor del umbral")
         tipoBin = simpledialog.askinteger(title="Valor del umbral", prompt="Seleccione el tipo de binarizacion\n1.Normal\n2.Inversa")
         filtro.binarizacion(filename[1], umbral, tipoBin)
@@ -88,11 +125,13 @@ def gauss(event):
         filtro.gaussiano(filename[1], des)
 
 window = tk.Tk()
-window.title("Segmentación Parcial")
+window.title("Práctica Final")
+width = window.winfo_screenwidth()
+height = window.winfo_screenheight()
 #Vamos a crear el contenedor de los elementos
-frame = tk.Frame(master = window, width = 900, height = 460, bg = "black")
+frame = tk.Frame(master = window, width = width, height = height, bg = "black")
 #Aquí empezamos a crear los elementos, empezamos por el título, que es un Label
-tituloLb = tk.Label(text="Práctica #2 'Segmentación parcial'", foreground="crimson", background="black", width="35", height="5", font=("Courier", 16))
+tituloLb = tk.Label(text="Práctica Final", foreground="crimson", background="black", width="35", height="5", font=("Courier", 16))
 tituloLb.place(x=220, y=0)
 #Creamos un botón para cargar una imagen
 cargarImgBt = tk.Button(text="CARGAR IMAGEN", width=30, height=1, font=("Courier", 16), anchor="center", foreground="blue", background="black")
@@ -101,36 +140,53 @@ cargarImgBt.place(x=40, y = 100)
 #Creamos un label para saber el status del archivo
 filestatus = tk.Label(text="No se ha seleccionado archivo...", foreground="white", background="black", width=50, height=1, font=("Courier", 10), anchor="center")
 filestatus.place(x=40, y=150)
-promediadorBt = tk.Button(text="FILTRO PROMEDIADOR", width=30, height=1, font=("Courier", 16), anchor="center", foreground="lime", background="black")
-promediadorBt.bind("<Button-1>", promediador)
-promediadorBt.place(x=40, y = 200)
-mediaBt = tk.Button(text="FILTRO MEDIA", width=30, height=1, font=("Courier", 16), anchor="center", foreground="pink", background="black")
-mediaBt.bind("<Button-1>", media)
-mediaBt.place(x=40, y = 250)
-maxBt = tk.Button(text="FILTRO MÁXIMO", width=30, height=1, font=("Courier", 16), anchor="center", foreground="yellow", background="black")
-maxBt.bind("<Button-1>", maximo)
-maxBt.place(x=40, y = 300)
-minBt = tk.Button(text="FILTRO MÍNIMO", width=30, height=1, font=("Courier", 16), anchor="center", foreground="coral", background="black")
-minBt.bind("<Button-1>", minimo)
-minBt.place(x=40, y = 350)
-mascaraKirschBt = tk.Button(text="MÁSCARA DE KIRSCH", width=30, height=1, font=("Courier", 16), anchor="center", foreground="orange", background="black")
-mascaraKirschBt.bind("<Button-1>", kir)
-mascaraKirschBt.place(x=450, y = 100)
-binarizacionBt = tk.Button(text="BINARIZAR IMAGEN", width=30, height=1, font=("Courier", 16), anchor="center", foreground="cyan", background="black")
-binarizacionBt.bind("<Button-1>", binarizar)
-binarizacionBt.place(x=450, y = 150)
-sal_pimBt = tk.Button(text="RUIDO SAL Y PIMIENTA", width=30, height=1, font=("Courier", 16), anchor="center", foreground="red", background="black")
-sal_pimBt.bind("<Button-1>", salPim)
-sal_pimBt.place(x=450, y = 200)
-"""gaussBt = tk.Button(text="RUIDO GAUSSIANO", width=30, height=1, font=("Courier", 16), anchor="center", foreground="olive", background="black")
-gaussBt.bind("<Button-1>", gauss)
-gaussBt.place(x=450, y = 250)"""
 histcolorBt = tk.Button(text="HISTOGRAMA RGB", width=30, height=1, font=("Courier", 16), anchor="center", foreground="lime", background="black")
 histcolorBt.bind("<Button-1>", histogramColor)
-histcolorBt.place(x=450, y = 250)
+histcolorBt.place(x=40, y = 200)
 histgrisBt = tk.Button(text="HISTOGRAMA GRISES", width=30, height=1, font=("Courier", 16), anchor="center", foreground="pink", background="black")
 histgrisBt.bind("<Button-1>", histogramGris)
-histgrisBt.place(x=450, y = 300)
+histgrisBt.place(x=40, y = 250)
+#Creamos un botón para ecualizar la imagen
+ecImgBt = tk.Button(text="ECUALIZAR IMAGEN", width=30, height=1, font=("Courier", 16), anchor="center", foreground="red", background="black")
+ecImgBt.bind("<Button-1>", ecualizarImg)
+ecImgBt.place(x=40, y = 300)
+#Boton para expandir histograma
+expandirBtn = tk.Button(text="EXPANDIR HISTOGRAMA", width=30, height=1, font=("Courier", 16), anchor="center", foreground="yellow", background="black")
+expandirBtn.bind("<Button-1>", expandirHist)
+expandirBtn.place(x=40, y = 350)
+#Boton para contraer histograma
+contraerBtn = tk.Button(text="CONTRAER HISTOGRAMA", width=30, height=1, font=("Courier", 16), anchor="center", foreground="orange", background="black")
+contraerBtn.bind("<Button-1>", contraerHist)
+contraerBtn.place(x=40, y = 400)
+#Boton para desplazar el histograma
+contraerBtn = tk.Button(text="DESPLAZAR HISTOGRAMA", width=30, height=1, font=("Courier", 16), anchor="center", foreground="purple", background="black")
+contraerBtn.bind("<Button-1>", desplazarHist)
+contraerBtn.place(x=40, y = 450)
+#Boton para ecualización exponencial
+contraerBtn = tk.Button(text="ECUALIZACIÓN EXPONENCIAL", width=30, height=1, font=("Courier", 16), anchor="center", foreground="magenta", background="black")
+contraerBtn.bind("<Button-1>", exponencial)
+contraerBtn.place(x=40, y = 500)
+promediadorBt = tk.Button(text="FILTRO PROMEDIADOR", width=30, height=1, font=("Courier", 16), anchor="center", foreground="lime", background="black")
+promediadorBt.bind("<Button-1>", promediador)
+promediadorBt.place(x=40, y = 550)
+mediaBt = tk.Button(text="FILTRO MEDIA", width=30, height=1, font=("Courier", 16), anchor="center", foreground="pink", background="black")
+mediaBt.bind("<Button-1>", media)
+mediaBt.place(x=40, y = 600)
+maxBt = tk.Button(text="FILTRO MÁXIMO", width=30, height=1, font=("Courier", 16), anchor="center", foreground="yellow", background="black")
+maxBt.bind("<Button-1>", maximo)
+maxBt.place(x=40, y = 650)
+minBt = tk.Button(text="FILTRO MÍNIMO", width=30, height=1, font=("Courier", 16), anchor="center", foreground="coral", background="black")
+minBt.bind("<Button-1>", minimo)
+minBt.place(x=450, y = 100)
+mascaraKirschBt = tk.Button(text="MÁSCARAS DE KIRSCH", width=30, height=1, font=("Courier", 16), anchor="center", foreground="orange", background="black")
+mascaraKirschBt.bind("<Button-1>", kir)
+mascaraKirschBt.place(x=450, y = 150)
+binarizacionBt = tk.Button(text="BINARIZAR IMAGEN", width=30, height=1, font=("Courier", 16), anchor="center", foreground="cyan", background="black")
+binarizacionBt.bind("<Button-1>", binarizar)
+binarizacionBt.place(x=450, y = 200)
+sal_pimBt = tk.Button(text="RUIDO SAL Y PIMIENTA", width=30, height=1, font=("Courier", 16), anchor="center", foreground="red", background="black")
+sal_pimBt.bind("<Button-1>", salPim)
+sal_pimBt.place(x=450, y = 250)
 frame.pack()
 file = None
 ruta = None
@@ -138,6 +194,7 @@ filename = None
 try:
     filtro = Filtros()
     histograma = Histograma()
+    brillo = Brillo()
     window.mainloop()
 except KeyboardInterrupt:
     sys.exit()

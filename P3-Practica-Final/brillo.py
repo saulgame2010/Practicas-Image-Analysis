@@ -5,7 +5,7 @@ from mates import Mates
 
 class Brillo:
     def ecualizacion(self, ruta):
-        img = cv2.imread(ruta, cv2.IMREAD_GRAYSCALE)
+        img = cv2.imread("./img/" + ruta, cv2.IMREAD_GRAYSCALE)
         img = cv2.equalizeHist(img)
 
         cv2.imshow('Histogramas', img)
@@ -20,7 +20,7 @@ class Brillo:
         cv2.destroyAllWindows()
 
     def expansion(self, ruta, nuevoMin, nuevoMax):
-        img = cv2.imread(ruta, cv2.IMREAD_GRAYSCALE)
+        img = cv2.imread("./img/" + ruta, cv2.IMREAD_GRAYSCALE)
         tamanioImg = img.shape #(ancho, alto)
         print(tamanioImg)
         pixeles = [] #lista
@@ -47,7 +47,7 @@ class Brillo:
         cv2.destroyAllWindows()
     
     def contraccion(self, ruta, nuevoMin, nuevoMax):
-        img = cv2.imread(ruta, cv2.IMREAD_GRAYSCALE)
+        img = cv2.imread("./img/" + ruta, cv2.IMREAD_GRAYSCALE)
         tamanioImg = img.shape
         pixeles = []
         for x in range(tamanioImg[0]):
@@ -73,7 +73,7 @@ class Brillo:
         cv2.destroyAllWindows()
 
     def desplazamiento(self, ruta, des):
-        img = cv2.imread(ruta, cv2.IMREAD_GRAYSCALE)
+        img = cv2.imread("./img/" + ruta, cv2.IMREAD_GRAYSCALE)
         tamanioImg = img.shape
         desplazamiento = Mates()
         for x in range(tamanioImg[0]):
@@ -91,7 +91,7 @@ class Brillo:
         cv2.destroyAllWindows()
 
     def ecExp(self, ruta, alfa):
-        img = cv2.imread(ruta, cv2.IMREAD_GRAYSCALE)
+        img = cv2.imread("./img/" + ruta, cv2.IMREAD_GRAYSCALE)
         tamanioImg = img.shape
         totalElementos = img.size
         pixeles = []
