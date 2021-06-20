@@ -125,6 +125,27 @@ def gauss(event):
         des = simpledialog.askfloat(title="Valor del umbral", prompt="Seleccione la desviacion estandar a utilizar")
         filtro.gaussiano(filename[1], des)
 
+def Abrir(event):
+    if(ruta == None):
+        messagebox.showerror("Error", "Selecciona una imagen primero")
+    else:
+        n = simpledialog.askinteger(title="Kernel", prompt="Establece el tamaño del kernel")
+        morf.Abrir(filename[1], n)
+
+def Cerrar(event):
+    if(ruta == None):
+        messagebox.showerror("Error", "Selecciona una imagen primero")
+    else:
+        n = simpledialog.askinteger(title="Kernel", prompt="Establece el tamaño del kernel")
+        morf.Cerrar(filename[1], n)
+
+def MorfGrad(event):
+    if(ruta == None):
+        messagebox.showerror("Error", "Selecciona una imagen primero")
+    else:
+        n = simpledialog.askinteger(title="Kernel", prompt="Establece el tamaño del kernel")
+        morf.MorfGradiente(filename[1], n)
+
 def topH(event):
     if(ruta == None):
         messagebox.showerror("Error", "Selecciona una imagen primero")
