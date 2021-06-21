@@ -61,3 +61,21 @@ class Morfologia:
         img2 = cv.imread("./img/" + ruta2, cv.IMREAD_GRAYSCALE)
         XOR = cv.bitwise_xor(img,img2)
         self.mostrarImagen("Xor", img, XOR, "xor", ruta)
+
+    def oor(self, ruta, ruta2):
+        img = cv.imread("./img/" + ruta, cv.IMREAD_GRAYSCALE)
+        img2 = cv.imread("./img/" + ruta2, cv.IMREAD_GRAYSCALE)
+        XOR = cv.bitwise_or(img,img2)
+        self.mostrarImagen("Xor", img, XOR, "xor", ruta)
+
+    def aand(self, ruta, ruta2):
+        img = cv.imread("./img/" + ruta, cv.IMREAD_GRAYSCALE)
+        img2 = cv.imread("./img/" + ruta2, cv.IMREAD_GRAYSCALE)
+        XOR = cv.bitwise_and(img,img2)
+        self.mostrarImagen("Xor", img, XOR, "xor", ruta)
+
+    def nott(self, ruta, ruta2):
+        img = cv.imread("./img/" + ruta, cv.IMREAD_GRAYSCALE)
+        img2 = cv.imread("./img/" + ruta2, cv.IMREAD_GRAYSCALE)
+        XOR = cv.bitwise_nott(img,img2)
+        self.mostrarImagen("Xor", img, XOR, "xor", ruta)

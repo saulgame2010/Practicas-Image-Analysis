@@ -192,6 +192,42 @@ def xorMetodo(event):
         filename2 = os.path.split(ruta2)
         morf.xor(filename[1], filename2[1])
 
+def orMetodo(event):
+    if(ruta == None):
+        messagebox.showerror("Error", "Selecciona una imagen primero")
+    else:
+        global file2
+        global ruta2
+        global filename2
+        file2 = askopenfilename()
+        ruta2 = str(file2)    
+        filename2 = os.path.split(ruta2)
+        morf.oor(filename[1], filename2[1])
+
+def andMetodo(event):
+    if(ruta == None):
+        messagebox.showerror("Error", "Selecciona una imagen primero")
+    else:
+        global file2
+        global ruta2
+        global filename2
+        file2 = askopenfilename()
+        ruta2 = str(file2)    
+        filename2 = os.path.split(ruta2)
+        morf.aand(filename[1], filename2[1])
+
+def notMetodo(event):
+    if(ruta == None):
+        messagebox.showerror("Error", "Selecciona una imagen primero")
+    else:
+        global file2
+        global ruta2
+        global filename2
+        file2 = askopenfilename()
+        ruta2 = str(file2)    
+        filename2 = os.path.split(ruta2)
+        morf.nott(filename[1], filename2[1])
+
 
 window = tk.Tk()
 window.title("Práctica Final")
@@ -283,6 +319,15 @@ top_hatBt.place(x=860, y = 350)
 black_hatBt = tk.Button(text="BLACK HAT", width=30, height=1, font=("Courier", 16), anchor="center", foreground="khaki", background="black")
 black_hatBt.bind("<Button-1>", blackH)
 black_hatBt.place(x=860, y = 400)
+black_hatBt = tk.Button(text="and", width=30, height=1, font=("Courier", 16), anchor="center", foreground="khaki", background="black")
+black_hatBt.bind("<Button-1>",andMetodo)
+black_hatBt.place(x=860, y = 450)
+black_hatBt = tk.Button(text="not", width=30, height=1, font=("Courier", 16), anchor="center", foreground="khaki", background="black")
+black_hatBt.bind("<Button-1>",notMetodo)
+black_hatBt.place(x=860, y = 500)
+black_hatBt = tk.Button(text="or", width=30, height=1, font=("Courier", 16), anchor="center", foreground="khaki", background="black")
+black_hatBt.bind("<Button-1>",orMetodo)
+black_hatBt.place(x=860, y = 550)
 frame.pack()
 file = None
 ruta = None
