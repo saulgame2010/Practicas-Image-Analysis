@@ -35,5 +35,5 @@ class Morfologia:
         
     def Otsu(self, ruta):
         img = cv.imread("./img/" + ruta, cv.IMREAD_GRAYSCALE)
-        imgRes = cv.threshold(img,0,255,cv.THRESH_BINARY+cv.THRESH_OTSU)
-        self.mostrarImagen("Otsu", img, imgRes, "Otsu", ruta)
+        ret2, th2 = cv.threshold(img, 0, 255, cv.THRESH_BINARY+cv.THRESH_OTSU)
+        self.mostrarImagen("Otsu", img, th2, "Otsu", ruta)
