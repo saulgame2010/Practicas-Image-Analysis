@@ -172,6 +172,12 @@ def Erosion(event):
     else:
         morf.Erosion(filename[1])
 
+def Dilatacion(event):
+    if(ruta == None):
+        messagebox.showerror("Error", "Selecciona una imagen primero")
+    else:
+        morf.Dilatacion(filename[1])
+
 window = tk.Tk()
 window.title("Práctica Final")
 width = window.winfo_screenwidth()
@@ -245,7 +251,7 @@ erosionBt = tk.Button(text="EROSIÓN", width=30, height=1, font=("Courier", 16),
 erosionBt.bind("<Button-1>", Erosion)
 erosionBt.place(x=860, y = 100)
 dilatacionBt = tk.Button(text="DILATACIÓN", width=30, height=1, font=("Courier", 16), anchor="center", foreground="darksalmon", background="black")
-dilatacionBt.bind("<Button-1>", )
+dilatacionBt.bind("<Button-1>", Dilatacion )
 dilatacionBt.place(x=860, y = 150)
 openingBt = tk.Button(text="OPENING", width=30, height=1, font=("Courier", 16), anchor="center", foreground="firebrick", background="black")
 openingBt.bind("<Button-1>", )

@@ -51,3 +51,9 @@ class Morfologia:
         kernel = np.ones((5,5),np.uint8)
         imgRes = cv.erode(img,kernel,iterations = 1)
         self.mostrarImagen("Erosion", img, imgRes, "Eros", ruta)
+
+    def Dilatacion(self, ruta):
+        img = cv.imread('./img/'+ ruta, 0)
+        kernel = np.ones((5,5),np.uint8)
+        imgRes = cv.dilate(img,kernel,iterations = 1)
+        self.mostrarImagen("Erosion", img, imgRes, "Eros", ruta)
