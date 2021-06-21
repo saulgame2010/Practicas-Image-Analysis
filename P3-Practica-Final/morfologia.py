@@ -31,3 +31,9 @@ class Morfologia:
         kernel = np.ones((n, n), np.uint8)
         imgRes = cv.dilate(img,kernel,iterations = 1)
         self.mostrarImagen("Dilatacion", img, imgRes, "Dilat", ruta)
+
+        
+    def Otsu(self, ruta):
+        img = cv.imread("./img/" + ruta, cv.IMREAD_GRAYSCALE)
+        imgRes = cv.threshold(img,0,255,cv.THRESH_BINARY+cv.THRESH_OTSU)
+        self.mostrarImagen("Otsu", img, imgRes, "Otsu", ruta)
