@@ -8,25 +8,6 @@ class Morfologia:
         cv.waitKey(0)
         cv.destroyAllWindows()
 
-    def Abrir(self, ruta, n):
-        img = cv.imread("./img/" + ruta, cv.IMREAD_GRAYSCALE)
-        kernel = np.ones((n, n), np.uint8)
-        imgRes = cv.morphologyEx(img, cv.MORPH_OPEN, kernel)
-        self.mostrarImagen("Opening", img, imgRes, "Op", ruta)
-
-    def Cerrar(self, ruta, n):
-        img = cv.imread("./img/" + ruta, cv.IMREAD_GRAYSCALE)
-        kernel = np.ones((n, n), np.uint8)
-        imgRes = cv.morphologyEx(img, cv.MORPH_CLOSE, kernel)
-        self.mostrarImagen("Closing", img, imgRes, "Cl", ruta)
-
-    def MorfGradiente(self, ruta, n):
-        img = cv.imread("./img/" + ruta, cv.IMREAD_GRAYSCALE)
-        kernel = np.ones((n, n), np.uint8)
-        imgRes = cv.morphologyEx(img, cv.MORPH_GRADIENT, kernel)
-        self.mostrarImagen("Gradiente Morfológico", img, imgRes, "MorfG", ruta)
-
-
     def topHat(self, ruta, n):
         img = cv.imread("./img/" + ruta, cv.IMREAD_GRAYSCALE)
         kernel = np.ones((n, n), np.uint8)
