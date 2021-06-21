@@ -160,18 +160,6 @@ def blackH(event):
         n = simpledialog.askinteger(title="Kernel", prompt="Establece el tamaño del kernel")
         morf.blackHat(filename[1], n)
 
-def metotsu(event):
-    if(ruta == None):
-        messagebox.showerror("Error", "Selecciona una imagen primero")
-    else:
-        morf.Otsu(filename[1])
-
-def Erosion(event):
-    if(ruta == None):
-        messagebox.showerror("Error", "Selecciona una imagen primero")
-    else:
-        morf.Erosion(filename[1])
-
 window = tk.Tk()
 window.title("Práctica Final")
 width = window.winfo_screenwidth()
@@ -239,10 +227,10 @@ multiUmbBt = tk.Button(text="MULTIUMBRALIZACIÓN", width=30, height=1, font=("Co
 multiUmbBt.bind("<Button-1>", )
 multiUmbBt.place(x=450, y = 450)
 otsuBt = tk.Button(text="UMBRALIZACIÓN DE OTSU", width=30, height=1, font=("Courier", 16), anchor="center", foreground="gray", background="black")
-otsuBt.bind("<Button-1>",metotsu)
+otsuBt.bind("<Button-1>", )
 otsuBt.place(x=450, y = 500)
 erosionBt = tk.Button(text="EROSIÓN", width=30, height=1, font=("Courier", 16), anchor="center", foreground="darkslateblue", background="black")
-erosionBt.bind("<Button-1>", Erosion)
+erosionBt.bind("<Button-1>", )
 erosionBt.place(x=860, y = 100)
 dilatacionBt = tk.Button(text="DILATACIÓN", width=30, height=1, font=("Courier", 16), anchor="center", foreground="darksalmon", background="black")
 dilatacionBt.bind("<Button-1>", )
