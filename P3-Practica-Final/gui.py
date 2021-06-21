@@ -125,27 +125,6 @@ def gauss(event):
         des = simpledialog.askfloat(title="Valor del umbral", prompt="Seleccione la desviacion estandar a utilizar")
         filtro.gaussiano(filename[1], des)
 
-def Abrir(event):
-    if(ruta == None):
-        messagebox.showerror("Error", "Selecciona una imagen primero")
-    else:
-        n = simpledialog.askinteger(title="Kernel", prompt="Establece el tamaño del kernel")
-        morf.Abrir(filename[1], n)
-
-def Cerrar(event):
-    if(ruta == None):
-        messagebox.showerror("Error", "Selecciona una imagen primero")
-    else:
-        n = simpledialog.askinteger(title="Kernel", prompt="Establece el tamaño del kernel")
-        morf.Cerrar(filename[1], n)
-
-def MorfGrad(event):
-    if(ruta == None):
-        messagebox.showerror("Error", "Selecciona una imagen primero")
-    else:
-        n = simpledialog.askinteger(title="Kernel", prompt="Establece el tamaño del kernel")
-        morf.MorfGradiente(filename[1], n)
-
 def topH(event):
     if(ruta == None):
         messagebox.showerror("Error", "Selecciona una imagen primero")
@@ -159,6 +138,20 @@ def blackH(event):
     else:
         n = simpledialog.askinteger(title="Kernel", prompt="Establece el tamaño del kernel")
         morf.blackHat(filename[1], n)
+
+def Erosion(event):
+    if(ruta == None):
+        messagebox.showerror("Error", "Selecciona una imagen primero")
+    else:
+        n = simpledialog.askinteger(title="Kernel", prompt="Establece el tamaño del kernel")
+        morf.Erosion(filename[1], n)
+
+def Dilatacion(event):
+    if(ruta == None):
+        messagebox.showerror("Error", "Selecciona una imagen primero")
+    else:
+        n = simpledialog.askinteger(title="Kernel", prompt="Establece el tamaño del kernel")
+        morf.Dilatacion(filename[1], n)
 
 window = tk.Tk()
 window.title("Práctica Final")
@@ -230,10 +223,10 @@ otsuBt = tk.Button(text="UMBRALIZACIÓN DE OTSU", width=30, height=1, font=("Cou
 otsuBt.bind("<Button-1>", )
 otsuBt.place(x=450, y = 500)
 erosionBt = tk.Button(text="EROSIÓN", width=30, height=1, font=("Courier", 16), anchor="center", foreground="darkslateblue", background="black")
-erosionBt.bind("<Button-1>", )
+erosionBt.bind("<Button-1>",Erosion )
 erosionBt.place(x=860, y = 100)
 dilatacionBt = tk.Button(text="DILATACIÓN", width=30, height=1, font=("Courier", 16), anchor="center", foreground="darksalmon", background="black")
-dilatacionBt.bind("<Button-1>", )
+dilatacionBt.bind("<Button-1>",Dilatacion)
 dilatacionBt.place(x=860, y = 150)
 openingBt = tk.Button(text="OPENING", width=30, height=1, font=("Courier", 16), anchor="center", foreground="firebrick", background="black")
 openingBt.bind("<Button-1>", )
