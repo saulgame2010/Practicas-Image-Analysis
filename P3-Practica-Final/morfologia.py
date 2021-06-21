@@ -8,25 +8,6 @@ class Morfologia:
         cv.waitKey(0)
         cv.destroyAllWindows()
 
-    def Abrir(self, ruta, n):
-        img = cv.imread("./img/" + ruta, cv.IMREAD_GRAYSCALE)
-        kernel = np.ones((n, n), np.uint8)
-        imgRes = cv.morphologyEx(img, cv.MORPH_OPEN, kernel)
-        self.mostrarImagen("Opening", img, imgRes, "Op", ruta)
-
-    def Cerrar(self, ruta, n):
-        img = cv.imread("./img/" + ruta, cv.IMREAD_GRAYSCALE)
-        kernel = np.ones((n, n), np.uint8)
-        imgRes = cv.morphologyEx(img, cv.MORPH_CLOSE, kernel)
-        self.mostrarImagen("Closing", img, imgRes, "Cl", ruta)
-
-    def MorfGradiente(self, ruta, n):
-        img = cv.imread("./img/" + ruta, cv.IMREAD_GRAYSCALE)
-        kernel = np.ones((n, n), np.uint8)
-        imgRes = cv.morphologyEx(img, cv.MORPH_GRADIENT, kernel)
-        self.mostrarImagen("Gradiente Morfológico", img, imgRes, "MorfG", ruta)
-
-
     def topHat(self, ruta, n):
         img = cv.imread("./img/" + ruta, cv.IMREAD_GRAYSCALE)
         kernel = np.ones((n, n), np.uint8)
@@ -38,22 +19,3 @@ class Morfologia:
         kernel = np.ones((n, n), np.uint8)
         imgRes = cv.morphologyEx(img, cv.MORPH_BLACKHAT, kernel)
         self.mostrarImagen("Black hat", img, imgRes, "blackH", ruta)
-
-    def Otsu(self, ruta):
-        img = cv.imread("./img/" + ruta, cv.IMREAD_GRAYSCALE)
-        blur = cv.GaussianBlur(img + ruta,(5,5),0)
-        th3 = cv.threshold(blur,0,255,cv.THRESH_BINARY+cv.THRESH_OTSU)
-        cv.imshow('Umbralizacion Otsu Gaussiano', th3)
-        k = cv.waitKey()
-
-    def Erosion(self, ruta):
-        img = cv.imread('./img/'+ ruta, 0)
-        kernel = np.ones((5,5),np.uint8)
-        imgRes = cv.erode(img,kernel,iterations = 1)
-        self.mostrarImagen("Erosion", img, imgRes, "Eros", ruta)
-
-    def Dilatacion(self, ruta):
-        img = cv.imread('./img/'+ ruta, 0)
-        kernel = np.ones((5,5),np.uint8)
-        imgRes = cv.dilate(img,kernel,iterations = 1)
-        self.mostrarImagen("Erosion", img, imgRes, "Eros", ruta)
