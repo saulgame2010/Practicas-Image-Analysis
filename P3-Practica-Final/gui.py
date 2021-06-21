@@ -149,13 +149,15 @@ def Erosion(event):
     if(ruta == None):
         messagebox.showerror("Error", "Selecciona una imagen primero")
     else:
-        morf.Erosion(filename[1])
+        n = simpledialog.askinteger(title="Kernel", prompt="Establece el tamaño del kernel")
+        morf.Erosion(filename[1], n)
 
 def Dilatacion(event):
     if(ruta == None):
         messagebox.showerror("Error", "Selecciona una imagen primero")
     else:
-        morf.Dilatacion(filename[1])
+        n = simpledialog.askinteger(title="Kernel", prompt="Establece el tamaño del kernel")
+        morf.Dilatacion(filename[1], n)
 
 def Abrir(event):
     if(ruta == None):
@@ -177,6 +179,19 @@ def MorfGrad(event):
     else:
         n = simpledialog.askinteger(title="Kernel", prompt="Establece el tamaño del kernel")
         morf.MorfGradiente(filename[1], n)
+
+def xorMetodo(event):
+    if(ruta == None):
+        messagebox.showerror("Error", "Selecciona una imagen primero")
+    else:
+        global file2
+        global ruta2
+        global filename2
+        file2 = askopenfilename()
+        ruta2 = str(file2)    
+        filename2 = os.path.split(ruta2)
+        morf.xor(filename[1], filename2[1])
+
 
 window = tk.Tk()
 window.title("Práctica Final")
@@ -241,14 +256,14 @@ binarizacionBt.place(x=450, y = 350)
 sal_pimBt = tk.Button(text="RUIDO SAL Y PIMIENTA", width=30, height=1, font=("Courier", 16), anchor="center", foreground="brown", background="black")
 sal_pimBt.bind("<Button-1>", salPim)
 sal_pimBt.place(x=450, y = 400)
-multiUmbBt = tk.Button(text="MULTIUMBRALIZACIÓN", width=30, height=1, font=("Courier", 16), anchor="center", foreground="crimson", background="black")
-multiUmbBt.bind("<Button-1>", )
+multiUmbBt = tk.Button(text="XOR", width=30, height=1, font=("Courier", 16), anchor="center", foreground="crimson", background="black")
+multiUmbBt.bind("<Button-1>", xorMetodo)
 multiUmbBt.place(x=450, y = 450)
 otsuBt = tk.Button(text="UMBRALIZACIÓN DE OTSU", width=30, height=1, font=("Courier", 16), anchor="center", foreground="gray", background="black")
-otsuBt.bind("<Button-1>", )
+otsuBt.bind("<Button-1>", metotsu)
 otsuBt.place(x=450, y = 500)
 erosionBt = tk.Button(text="EROSIÓN", width=30, height=1, font=("Courier", 16), anchor="center", foreground="darkslateblue", background="black")
-erosionBt.bind("<Button-1>", )
+erosionBt.bind("<Button-1>", Erosion)
 erosionBt.place(x=860, y = 100)
 dilatacionBt = tk.Button(text="DILATACIÓN", width=30, height=1, font=("Courier", 16), anchor="center", foreground="darksalmon", background="black")
 dilatacionBt.bind("<Button-1>", Dilatacion )

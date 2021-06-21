@@ -55,3 +55,9 @@ class Morfologia:
         kernel = np.ones((n, n), np.uint8)
         imgRes = cv.morphologyEx(img, cv.MORPH_GRADIENT, kernel)
         self.mostrarImagen("Gradiente Morfológico", img, imgRes, "MorfG", ruta)
+
+    def xor(self, ruta, ruta2):
+        img = cv.imread("./img/" + ruta, cv.IMREAD_GRAYSCALE)
+        img2 = cv.imread("./img/" + ruta2, cv.IMREAD_GRAYSCALE)
+        XOR = cv.bitwise_xor(img,img2)
+        self.mostrarImagen("Xor", img, XOR, "xor", ruta)
