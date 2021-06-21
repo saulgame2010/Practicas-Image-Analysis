@@ -37,3 +37,21 @@ class Morfologia:
         img = cv.imread("./img/" + ruta, cv.IMREAD_GRAYSCALE)
         ret2, th2 = cv.threshold(img, 0, 255, cv.THRESH_BINARY+cv.THRESH_OTSU)
         self.mostrarImagen("Otsu", img, th2, "Otsu", ruta)
+
+    def Abrir(self, ruta, n):
+        img = cv.imread("./img/" + ruta, cv.IMREAD_GRAYSCALE)
+        kernel = np.ones((n, n), np.uint8)
+        imgRes = cv.morphologyEx(img, cv.MORPH_OPEN, kernel)
+        self.mostrarImagen("Opening", img, imgRes, "Op", ruta)
+
+    def Cerrar(self, ruta, n):
+        img = cv.imread("./img/" + ruta, cv.IMREAD_GRAYSCALE)
+        kernel = np.ones((n, n), np.uint8)
+        imgRes = cv.morphologyEx(img, cv.MORPH_CLOSE, kernel)
+        self.mostrarImagen("Closing", img, imgRes, "Cl", ruta)
+
+    def MorfGradiente(self, ruta, n):
+        img = cv.imread("./img/" + ruta, cv.IMREAD_GRAYSCALE)
+        kernel = np.ones((n, n), np.uint8)
+        imgRes = cv.morphologyEx(img, cv.MORPH_GRADIENT, kernel)
+        self.mostrarImagen("Gradiente Morfológico", img, imgRes, "MorfG", ruta)

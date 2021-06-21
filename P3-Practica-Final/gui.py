@@ -139,25 +139,44 @@ def blackH(event):
         n = simpledialog.askinteger(title="Kernel", prompt="Establece el tamaño del kernel")
         morf.blackHat(filename[1], n)
 
+def metotsu(event):
+    if(ruta == None):
+        messagebox.showerror("Error", "Selecciona una imagen primero")
+    else:
+        morf.Otsu(filename[1])
+
 def Erosion(event):
     if(ruta == None):
         messagebox.showerror("Error", "Selecciona una imagen primero")
     else:
-        n = simpledialog.askinteger(title="Kernel", prompt="Establece el tamaño del kernel")
-        morf.Erosion(filename[1], n)
+        morf.Erosion(filename[1])
 
 def Dilatacion(event):
     if(ruta == None):
         messagebox.showerror("Error", "Selecciona una imagen primero")
     else:
-        n = simpledialog.askinteger(title="Kernel", prompt="Establece el tamaño del kernel")
-        morf.Dilatacion(filename[1], n)
+        morf.Dilatacion(filename[1])
 
-def Otsu(event):
+def Abrir(event):
     if(ruta == None):
         messagebox.showerror("Error", "Selecciona una imagen primero")
     else:
-        morf.Otsu(filename[1])
+        n = simpledialog.askinteger(title="Kernel", prompt="Establece el tamaño del kernel")
+        morf.Abrir(filename[1], n)
+
+def Cerrar(event):
+    if(ruta == None):
+        messagebox.showerror("Error", "Selecciona una imagen primero")
+    else:
+        n = simpledialog.askinteger(title="Kernel", prompt="Establece el tamaño del kernel")
+        morf.Cerrar(filename[1], n)
+
+def MorfGrad(event):
+    if(ruta == None):
+        messagebox.showerror("Error", "Selecciona una imagen primero")
+    else:
+        n = simpledialog.askinteger(title="Kernel", prompt="Establece el tamaño del kernel")
+        morf.MorfGradiente(filename[1], n)
 
 window = tk.Tk()
 window.title("Práctica Final")
@@ -226,22 +245,22 @@ multiUmbBt = tk.Button(text="MULTIUMBRALIZACIÓN", width=30, height=1, font=("Co
 multiUmbBt.bind("<Button-1>", )
 multiUmbBt.place(x=450, y = 450)
 otsuBt = tk.Button(text="UMBRALIZACIÓN DE OTSU", width=30, height=1, font=("Courier", 16), anchor="center", foreground="gray", background="black")
-otsuBt.bind("<Button-1>", Otsu )
+otsuBt.bind("<Button-1>", )
 otsuBt.place(x=450, y = 500)
 erosionBt = tk.Button(text="EROSIÓN", width=30, height=1, font=("Courier", 16), anchor="center", foreground="darkslateblue", background="black")
-erosionBt.bind("<Button-1>",Erosion )
+erosionBt.bind("<Button-1>", )
 erosionBt.place(x=860, y = 100)
 dilatacionBt = tk.Button(text="DILATACIÓN", width=30, height=1, font=("Courier", 16), anchor="center", foreground="darksalmon", background="black")
-dilatacionBt.bind("<Button-1>",Dilatacion)
+dilatacionBt.bind("<Button-1>", Dilatacion )
 dilatacionBt.place(x=860, y = 150)
 openingBt = tk.Button(text="OPENING", width=30, height=1, font=("Courier", 16), anchor="center", foreground="firebrick", background="black")
-openingBt.bind("<Button-1>", )
+openingBt.bind("<Button-1>", Abrir)
 openingBt.place(x=860, y = 200)
 closingBt = tk.Button(text="CLOSING", width=30, height=1, font=("Courier", 16), anchor="center", foreground="white", background="black")
-closingBt.bind("<Button-1>", )
+closingBt.bind("<Button-1>", Cerrar)
 closingBt.place(x=860, y = 250)
 gradientBt = tk.Button(text="GRADIENTE", width=30, height=1, font=("Courier", 16), anchor="center", foreground="greenyellow", background="black")
-gradientBt.bind("<Button-1>", )
+gradientBt.bind("<Button-1>", MorfGrad)
 gradientBt.place(x=860, y = 300)
 top_hatBt = tk.Button(text="TOP HAT", width=30, height=1, font=("Courier", 16), anchor="center", foreground="goldenrod", background="black")
 top_hatBt.bind("<Button-1>", topH)
