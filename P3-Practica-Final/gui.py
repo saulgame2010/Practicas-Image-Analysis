@@ -228,13 +228,25 @@ def notMetodo(event):
         filename2 = os.path.split(ruta2)
         morf.nott(filename[1], filename2[1])
 
+def hitme(event):
+    if(ruta == None):
+        messagebox.showerror("Error", "Selecciona una imagen primero")
+    else:
+        global file2
+        global ruta2
+        global filename2
+        file2 = askopenfilename()
+        ruta2 = str(file2)    
+        filename2 = os.path.split(ruta2)
+        morf.hitmmiss(filename[1], filename2[1])
+
 
 window = tk.Tk()
 window.title("Práctica Final")
 width = window.winfo_screenwidth()
 height = window.winfo_screenheight()
 #Vamos a crear el contenedor de los elementos
-frame = tk.Frame(master = window, width = 1300, height = 580, bg = "black")
+frame = tk.Frame(master = window, width = 1300, height = 680, bg = "black")
 #Aquí empezamos a crear los elementos, empezamos por el título, que es un Label
 tituloLb = tk.Label(text="Práctica Final", foreground="crimson", background="black", width="35", height="5", font=("Courier", 16))
 tituloLb.place(x=420, y=0)
@@ -328,6 +340,9 @@ black_hatBt.place(x=860, y = 500)
 black_hatBt = tk.Button(text="or", width=30, height=1, font=("Courier", 16), anchor="center", foreground="khaki", background="black")
 black_hatBt.bind("<Button-1>",orMetodo)
 black_hatBt.place(x=860, y = 550)
+hitmissBt = tk.Button(text="HIT MISS", width=30, height=1, font=("Courier", 16), anchor="center", foreground="khaki", background="black")
+hitmissBt.bind("<Button-1>",hitme)
+hitmissBt.place(x=860, y = 600)
 frame.pack()
 file = None
 ruta = None

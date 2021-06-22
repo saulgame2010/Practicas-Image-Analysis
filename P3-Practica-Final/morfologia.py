@@ -77,5 +77,45 @@ class Morfologia:
     def nott(self, ruta, ruta2):
         img = cv.imread("./img/" + ruta, cv.IMREAD_GRAYSCALE)
         img2 = cv.imread("./img/" + ruta2, cv.IMREAD_GRAYSCALE)
-        XOR = cv.bitwise_nott(img,img2)
+        XOR = cv.bitwise_not(img,img2)
         self.mostrarImagen("Xor", img, XOR, "xor", ruta)
+
+    def hitmmiss(self, ruta, ruta2):
+        img = cv.imread("./img/"+ruta)
+        img1  = cv.imread("./img/"+ruta, cv.IMREAD_GRAYSCALE)
+        img2 = cv.imread("./img/"+ruta2, cv.IMREAD_GRAYSCALE)
+        tamanioImg = img1.shape #(ancho, alto)
+        print(tamanioImg)
+        """for x in range(tamanioImg[0]): #(min, max)
+            for y in range(tamanioImg[1]):                
+                if img1.item(x, y) == 255:
+                    img1.itemset((x, y), 1)
+                if img1.item(x, y) == 0:
+                    img1.itemset((x, y), -1)"""
+        """img1 = np.array(img1, dtype="uint8")
+        img2 = np.array(img2, dtype="int")"""
+        img3 = img2
+        np.array(img2, dtype="int")
+        """m = cv.moments(img2)
+        centrox = m["m10"]/m["m00"]
+        centroy = m["m10"]/m["m00"]
+        tamanioImg2 = img2.shape #(ancho, alto)
+        for x in range(tamanioImg2[0]): #(min, max)
+            for y in range(tamanioImg2[1]):                
+                if x == centrox and y == centroy:
+                    img3.itemset((x, y), 255)
+                else:
+                    img3.itemset((x, y), 0)"""
+        output = cv.morphologyEx(img1, cv.MORPH_HITMISS, img2)
+        self.mostrarImagen("c", img, output, "c", ruta)
+        #self.marcarhallazgos(output, img3, img, ruta)
+
+    def marcarhallazgos(self, img,img2,ret, ruta):
+        for i in range(len(img)-len(img2)+1):
+            for j in range(len(img[0])-len(img2[0])+1):
+                if (img2==img[i:i+len(img2),j:j+len(img2[0])]).all():
+                    ret[(i+1),j:(j+len(img2[0]))] = [0,255,255]
+                    ret[i+len(img2),j:j+len(img2[0])] = [0,255,255]
+                    ret[i+1:i+len(img2),j+len(img2[0])] = [0,255,255]
+                    ret[i+1:i+len(img2),j] = [0,255,255]
+        self.mostrarImagen("Caca", img, ret, "Hitme", ruta)
