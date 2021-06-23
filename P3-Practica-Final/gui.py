@@ -232,8 +232,13 @@ def hitme(event):
     if(ruta == None):
         messagebox.showerror("Error", "Selecciona una imagen primero")
     else:
-        
-        morf.hitmmiss(filename[1])
+        global file2
+        global ruta2
+        global filename2
+        file2 = askopenfilename()
+        ruta2 = str(file2)    
+        filename2 = os.path.split(ruta2)
+        morf.hitmmiss(filename[1], filename2[1])
 
 
 window = tk.Tk()
