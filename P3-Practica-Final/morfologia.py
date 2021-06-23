@@ -1,5 +1,7 @@
 import cv2 as cv
 import numpy as np
+import pytesseract
+pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract'
 
 class Morfologia:
     def mostrarImagen(self, titulo, imgOriginal, imgProcesada, proceso, ruta):
@@ -80,42 +82,32 @@ class Morfologia:
         XOR = cv.bitwise_not(img,img2)
         self.mostrarImagen("Xor", img, XOR, "xor", ruta)
 
-    def hitmmiss(self, ruta, ruta2):
-        img = cv.imread("./img/"+ruta)
-        img1  = cv.imread("./img/"+ruta, cv.IMREAD_GRAYSCALE)
-        img2 = cv.imread("./img/"+ruta2, cv.IMREAD_GRAYSCALE)
-        tamanioImg = img1.shape #(ancho, alto)
-        print(tamanioImg)
-        """for x in range(tamanioImg[0]): #(min, max)
-            for y in range(tamanioImg[1]):                
-                if img1.item(x, y) == 255:
-                    img1.itemset((x, y), 1)
-                if img1.item(x, y) == 0:
-                    img1.itemset((x, y), -1)"""
-        """img1 = np.array(img1, dtype="uint8")
-        img2 = np.array(img2, dtype="int")"""
-        img3 = img2
-        np.array(img2, dtype="int")
-        """m = cv.moments(img2)
-        centrox = m["m10"]/m["m00"]
-        centroy = m["m10"]/m["m00"]
-        tamanioImg2 = img2.shape #(ancho, alto)
-        for x in range(tamanioImg2[0]): #(min, max)
-            for y in range(tamanioImg2[1]):                
-                if x == centrox and y == centroy:
-                    img3.itemset((x, y), 255)
-                else:
-                    img3.itemset((x, y), 0)"""
-        output = cv.morphologyEx(img1, cv.MORPH_HITMISS, img2)
-        self.mostrarImagen("c", img, output, "c", ruta)
-        #self.marcarhallazgos(output, img3, img, ruta)
+    def hitmmiss(self, ruta):
+        placa = []
+        image = cv.imread("./img/"+ruta)
+        gray = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
+        gray = cv.blur(gray,(3,3))
+        canny = cv.Canny(gray,150,200)
+        kernel = np.ones((3, 3), np.uint8)
+        canny = cv.dilate(canny, kernel, iterations=1)
+        #_,cnts,_ = cv.findContours(canny,cv.RETR_LIST,cv.CHAIN_APPROX_SIMPLE)
+        cnts,_ = cv.findContours(canny,cv.RETR_LIST,cv.CHAIN_APPROX_SIMPLE)
+        
+        for c in cnts:
+            area = cv.contourArea(c)
+            x,y,w,h = cv.boundingRect(c)
+            epsilon = 0.1*cv.arcLength(c, True)
+            aprox = cv.approxPolyDP(c, epsilon, True)
 
-    def marcarhallazgos(self, img,img2,ret, ruta):
-        for i in range(len(img)-len(img2)+1):
-            for j in range(len(img[0])-len(img2[0])+1):
-                if (img2==img[i:i+len(img2),j:j+len(img2[0])]).all():
-                    ret[(i+1),j:(j+len(img2[0]))] = [0,255,255]
-                    ret[i+len(img2),j:j+len(img2[0])] = [0,255,255]
-                    ret[i+1:i+len(img2),j+len(img2[0])] = [0,255,255]
-                    ret[i+1:i+len(img2),j] = [0,255,255]
-        self.mostrarImagen("Caca", img, ret, "Hitme", ruta)
+            if len(aprox) == 4 and area > 10:
+                print(area)
+                aspect_ratio = float(w)/h
+                if aspect_ratio > 1.7:
+                    #cv.drawContours(image,[c], 0,(0,255,0),1)
+                    placa = gray[y:y+h, x:x+w]
+                    text = pytesseract.image_to_string(placa, config='--psm 11')
+                    print(text)
+                    cv.imshow("cuadro", placa)
+        cv.imshow('Image',image)
+        cv.moveWindow('Image',45,10)
+        cv.waitKey(0)
