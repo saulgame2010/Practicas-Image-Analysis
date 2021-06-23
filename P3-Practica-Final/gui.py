@@ -228,7 +228,7 @@ def notMetodo(event):
         filename2 = os.path.split(ruta2)
         morf.nott(filename[1], filename2[1])
 
-def hitme(event):
+def Id(event):
     if(ruta == None):
         messagebox.showerror("Error", "Selecciona una imagen primero")
     else:
@@ -238,7 +238,7 @@ def hitme(event):
         file2 = askopenfilename()
         ruta2 = str(file2)    
         filename2 = os.path.split(ruta2)
-        morf.hitmmiss(filename[1], filename2[1])
+        morf.Identificador(filename[1], filename2[1])
 
 
 window = tk.Tk()
@@ -341,7 +341,7 @@ black_hatBt = tk.Button(text="or", width=30, height=1, font=("Courier", 16), anc
 black_hatBt.bind("<Button-1>",orMetodo)
 black_hatBt.place(x=860, y = 550)
 hitmissBt = tk.Button(text="HIT MISS", width=30, height=1, font=("Courier", 16), anchor="center", foreground="khaki", background="black")
-hitmissBt.bind("<Button-1>",hitme)
+hitmissBt.bind("<Button-1>",Id)
 hitmissBt.place(x=860, y = 600)
 frame.pack()
 file = None

@@ -1,7 +1,5 @@
 import cv2 as cv
 import numpy as np
-import pytesseract
-pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract'
 
 class Morfologia:
     def mostrarImagen(self, titulo, imgOriginal, imgProcesada, proceso, ruta):
@@ -81,33 +79,62 @@ class Morfologia:
         XOR = cv.bitwise_not(img)
         self.mostrarImagen("Xor", img, XOR, "xor", ruta)
 
-    def hitmmiss(self, ruta, ruta2):
-        img = cv.imread("./img/"+ruta)
-        gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+    def Identificador(self, ruta, ruta2):
+
+        # Leer las imágenes que vamos a comparar
+        # Imagen sobre la que vamos a detectar si existe otra imagen
+        img = cv.imread("./img/" + ruta)
+        img1 = cv.imread("./img/" + ruta)
+        # Imagen que comprobamos si existe en la imagen Todo
+        img2 = cv.imread("./img/" + ruta2)
+
+        # Tamaño de la imagen 1.jpg
+        w, h = img2.shape[:-1]
+
+        # Función que sirve para detectar si una imagen está contenida en otra
+        res = cv.matchTemplate(img1, img2, cv.TM_CCOEFF_NORMED)
+
+        # Umbral admitido
+        threshold = .75
+
+        # Si está dentro del umbral, crear un cuadrado sobre la imagen contenida en la imagen Todo
+        loc = np.where(res >= threshold)
+        for pt in zip(*loc[::-1]):  # Cambiar columnas y filas
+            cv.rectangle(img1, pt, (pt[0] + w, pt[1] + h), (0, 255, 0), 1)
+
+        self.mostrarImagen("Identificador", img, img1, "Identificador", ruta)
+
+        """img = cv.imread("./img/"+ruta)
+        img1 = cv.imread("./img/" + ruta, cv.IMREAD_GRAYSCALE)
         img2 = cv.imread("./img/"+ruta2, cv.IMREAD_GRAYSCALE)
-        gray = np.array(gray, dtype="uint8")
+        img1 = np.array(img1, dtype="uint8")
         img2 = np.array(img2, dtype="int")
         if ruta2 == "gatoblanco.jpg":
-            tamanioImg = img2.shape #(ancho, alto)
-            for x in range(tamanioImg[0]): #(min, max)
-                for y in range(tamanioImg[1]):                
+            tamanioImg2 = img2.shape #(ancho, alto)
+            for x in range(tamanioImg2[0]): #(min, max)
+                for y in range(tamanioImg2[1]):
                     if img2.item(x, y) == 0:
                         img2.itemset((x, y), -1)
                     if img2.item(x, y) == 255:
                         img2.itemset((x, y), 1)
         else:
-            tamanioImg = img2.shape #(ancho, alto)
-            for x in range(tamanioImg[0]): #(min, max)
-                for y in range(tamanioImg[1]):                
+            tamanioImg2 = img2.shape #(ancho, alto)
+            for x in range(tamanioImg2[0]): #(min, max)
+                for y in range(tamanioImg2[1]):
                     if img2.item(x, y) == 0:
                         img2.itemset((x, y), 1)
                     if img2.item(x, y) == 255:
                         img2.itemset((x, y), -1)
-        output_image = cv.morphologyEx(gray, cv.MORPH_HITMISS, img2)
-        #img2 = np.zeros((len(img2), len(img2[0])))
-        #img2[int(len(img2)/2), int(len(img2[0])/2)] = 255
-        self.mostrarImagen("Hit", img, output_image, "hitme", ruta)
-        #self.marcarhallazgos(output_image, img2, img, ruta)
+        output_image = cv.morphologyEx(img1, cv.MORPH_HITMISS, img2)
+        self.mostrarImagen("Hit", img1, output_image, "hitme", ruta)
+        tamanio = img.shape
+        for x in range(tamanio[0]):
+            for y in range (tamanio[1]):
+                if output_image[x,y]==255:
+                    cv.rectangle(img,(x,y),(x+20,y+30),(0,255,0),2)
+        ##self.mostrarImagen("Hit", img1, img, "hitme", ruta)"""
+
+
         
 
     """def marcarhallazgos(self,img,img2,ret, ruta):
